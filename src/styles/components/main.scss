@@ -1,0 +1,25 @@
+.main {
+  flex: 1 1;
+
+  .search {
+    background-color: $main-color;
+    padding: 60px $defaultSidePadding;
+
+    .search__instruction {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .search__form {
+      padding-top: 40px;
+      width: 500px;
+      margin: auto;
+
+      .search__buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}

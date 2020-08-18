@@ -1,0 +1,16 @@
+.header {
+  flex: 0 1;
+  display: flex;
+  background-color: $mainDark-color;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px $defaultSidePadding;
+
+  &__logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); // for centring logo besides btn on the right
+    color: $secondary-color;
+  }
+}

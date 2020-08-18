@@ -1,0 +1,25 @@
+button {
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  background: $secondary-color;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1.2rem;
+
+  &:hover {
+    background: #fff;
+  }
+}
+
+input {
+  padding: 1rem 2rem;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: gray;
+  width: 100%;
+  display: block;
+}
