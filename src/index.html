@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="index.js"></script>
     <link rel="stylesheet" href="style.css" />
     <title>ProProperty</title>
   </head>
@@ -20,12 +19,35 @@
           current location!
         </p>
         <form class="search__form">
-          <input type="text" placeholder="placeholder" />
+          <div class="search__input">
+            <input type="text" placeholder="USA location" />
+            <ul class="search__suggestions">
+              <li class="search__suggestion">Atlanta</li>
+              <li class="search__suggestion">Atlanta</li>
+              <li class="search__suggestion">Atlanta</li>
+              <li class="search__suggestion">Atlanta</li>
+              <li class="search__suggestion">Atlanta</li>
+            </ul>
+          </div>
           <div class="search__buttons">
-            <button>Go</button>
-            <button>My locations</button>
+            <input type="button" class="search__go-btn" value="Go" />
+            <input
+              type="button"
+              class="search__myLocation-btn"
+              value="My locations"
+            />
           </div>
         </form>
+      </section>
+      <section class="search-results">
+        <div class="recent-searches">
+          <p class="recent-searches__text">Recent searches:</p>
+          <ul class="recent-searches__items">
+            <li class="recent-searches__item"><span>Search #1 (8)</span></li>
+            <li class="recent-searches__item"><span>Search #2 (56)</span></li>
+            <li class="recent-searches__item"><span>Search #3 (124)</span></li>
+          </ul>
+        </div>
       </section>
     </main>
   </body>

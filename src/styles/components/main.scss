@@ -1,9 +1,13 @@
 .main {
   flex: 1 1;
+  display: flex;
+  flex-direction: column;
 
   .search {
     background-color: $main-color;
     padding: 60px $defaultSidePadding;
+    color: #fff;
+    flex: 0 1;
 
     .search__instruction {
       font-size: 1.2rem;
@@ -15,10 +19,95 @@
       width: 500px;
       margin: auto;
 
+      .search__input {
+        position: relative;
+
+        .search__suggestions {
+          // transform-origin: top center;
+          height: 0;
+          transition: height 0.5s;
+          overflow: hidden;
+
+          &--show {
+            height: 280px; // search for auto height which work with transition
+          }
+
+          .search__suggestion {
+            padding: 1rem 2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: $font-color;
+            width: 100%;
+            display: block;
+            background-color: #fff;
+            border-top: 1px solid gray;
+
+            &:hover {
+              background-color: $secondary-color;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
       .search__buttons {
         margin-top: 20px;
         display: flex;
         justify-content: space-between;
+      }
+    }
+  }
+
+  .search-results {
+    flex: 1 1;
+    padding: 40px 0px;
+    background-color: $mainLight-color;
+    color: #fff;
+    height: 100%;
+    display: flex;
+
+    .recent-searches {
+      width: 500px;
+      margin: 0px auto;
+      display: flex;
+      flex-direction: column;
+
+      &__text {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding-bottom: 40px;
+        color: $secondary-color;
+      }
+
+      &__items {
+        border: 4px $secondary-color solid;
+        border-radius: 20px;
+        padding: 20px;
+        min-height: auto;
+        flex: 1 1;
+        font-size: 1.2rem;
+
+        li {
+          padding: 5px 0px;
+
+          &:first-child {
+            padding-top: 0px;
+          }
+
+          &:last-child {
+            padding-bottom: 0px;
+          }
+
+          span {
+            cursor: pointer;
+
+            &:hover {
+              color: $secondary-color;
+              text-decoration: underline;
+            }
+          }
+        }
       }
     }
   }

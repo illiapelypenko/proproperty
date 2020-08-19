@@ -1,37 +1,37 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebpackPlugin({
-  template: "./src/index.html",
-  filename: "./index.html",
+  template: './src/index.html',
+  filename: './index.html',
 });
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   plugins: [htmlPlugin],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.s(a|c)ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ["babel-loader"],
+        use: ['babel-loader'],
       },
     ],
   },
   resolve: {
-    extensions: [".js"],
+    extensions: ['.js'],
   },
 };
