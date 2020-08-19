@@ -1,3 +1,5 @@
+// TODO spinner on fetch pending
+
 import './styles/main.scss';
 
 const searchInput = document.querySelector('.search__input');
@@ -9,6 +11,7 @@ const state = {
   currentSearchItem: {}, // sugestion
   suggestions: [], // sugestion[]
   recentSearches: [], // {suggestion, listForSale}[]
+  searchStatus: '', // pending, success, error
 };
 
 async function renderSuggestions() {
@@ -133,6 +136,36 @@ function init() {
     () => (searchInput.placeholder = 'find and pick a place from the list')
   );
   initEventListeners();
+  drawSpinner();
+}
+
+// SPINNER
+
+const canvas = document.querySelector('.spinner');
+const ctx = canvas.getContext('2d');
+
+const rnd = Math.random() * 10;
+
+let startAngle = 0;
+let drawId = 0;
+
+function drawSpinner() {
+  ctx.clearRect(0, 0, 300, 300);
+  ctx.beginPath();
+  ctx.arc(150, 150, 100, 0, 2 * Math.PI);
+  ctx.lineWidth = 20;
+  ctx.strokeStyle = '#32363e';
+  ctx.stroke();
+
+  // pink spinner itself
+  ctx.beginPath();
+  ctx.arc(150, 150, 100, startAngle + rnd, 1 + startAngle + rnd);
+  ctx.lineWidth = 20;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#4aff4a';
+  ctx.stroke();
+  startAngle += 0.1;
+  drawId = requestAnimationFrame(drawSpinner);
 }
 
 init();
