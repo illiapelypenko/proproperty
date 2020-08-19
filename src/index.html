@@ -19,15 +19,13 @@
           current location!
         </p>
         <form class="search__form">
-          <div class="search__input">
-            <input type="text" placeholder="USA location" />
-            <ul class="search__suggestions">
-              <li class="search__suggestion">Atlanta</li>
-              <li class="search__suggestion">Atlanta</li>
-              <li class="search__suggestion">Atlanta</li>
-              <li class="search__suggestion">Atlanta</li>
-              <li class="search__suggestion">Atlanta</li>
-            </ul>
+          <div class="search__input-container">
+            <input
+              class="search__input"
+              type="text"
+              placeholder="loading suggestions....."
+            />
+            <ul class="search__suggestions"></ul>
           </div>
           <div class="search__buttons">
             <input type="button" class="search__go-btn" value="Go" />
@@ -42,11 +40,7 @@
       <section class="search-results">
         <div class="recent-searches">
           <p class="recent-searches__text">Recent searches:</p>
-          <ul class="recent-searches__items">
-            <li class="recent-searches__item"><span>Search #1 (8)</span></li>
-            <li class="recent-searches__item"><span>Search #2 (56)</span></li>
-            <li class="recent-searches__item"><span>Search #3 (124)</span></li>
-          </ul>
+          <ul class="recent-searches__items"></ul>
         </div>
       </section>
     </main>

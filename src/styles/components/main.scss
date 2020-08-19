@@ -19,17 +19,17 @@
       width: 500px;
       margin: auto;
 
-      .search__input {
+      .search__input-container {
         position: relative;
 
         .search__suggestions {
           // transform-origin: top center;
           height: 0;
           transition: height 0.5s;
-          overflow: hidden;
+          overflow-y: auto;
 
           &--show {
-            height: 280px; // search for auto height which work with transition
+            height: 224px; // search for auto height which work with transition
           }
 
           .search__suggestion {
@@ -87,6 +87,7 @@
         min-height: auto;
         flex: 1 1;
         font-size: 1.2rem;
+        overflow-y: auto;
 
         li {
           padding: 5px 0px;
