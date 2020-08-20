@@ -13,7 +13,6 @@
     </header>
     <main class="main">
       <section class="search">
-        <canvas class="spinner" width="300" height="300"></canvas>
         <p class="search__instruction">
           Use the form below to search for houses to buy. You can search by
           place-name, postcode, or click 'My location', to search in your
@@ -21,11 +20,7 @@
         </p>
         <form class="search__form">
           <div class="search__input-container">
-            <input
-              class="search__input"
-              type="text"
-              placeholder="loading suggestions....."
-            />
+            <input class="search__input" type="text" placeholder="USA city" />
             <ul class="search__suggestions"></ul>
           </div>
           <div class="search__buttons">
@@ -37,6 +32,9 @@
             />
           </div>
         </form>
+        <div class="spinner">
+          <canvas class="spinner-canvas" width="400" height="400"></canvas>
+        </div>
       </section>
       <section class="search-results">
         <div class="recent-searches">

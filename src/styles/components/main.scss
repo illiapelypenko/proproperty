@@ -4,6 +4,7 @@
   flex-direction: column;
 
   .search {
+    position: relative;
     background-color: $main-color;
     padding: 60px $defaultSidePadding;
     color: #fff;
@@ -111,5 +112,29 @@
         }
       }
     }
+  }
+}
+
+.spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $main-color;
+  transition: opacity 0.5s;
+  opacity: 1;
+
+  &--hide {
+    opacity: 0;
+  }
+
+  .spinner-canvas {
+    width: 100px;
+    height: 100px;
+    display: block;
   }
 }

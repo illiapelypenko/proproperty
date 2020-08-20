@@ -1,6 +1,5 @@
-// TODO spinner on fetch pending
-
 import './styles/main.scss';
+import { drawSpinner, spinner } from './components/spinner';
 
 const searchInput = document.querySelector('.search__input');
 const searchSuggestions = document.querySelector('.search__suggestions');
@@ -11,7 +10,6 @@ const state = {
   currentSearchItem: {}, // sugestion
   suggestions: [], // sugestion[]
   recentSearches: [], // {suggestion, listForSale}[]
-  searchStatus: '', // pending, success, error
 };
 
 async function renderSuggestions() {
@@ -33,9 +31,7 @@ function initEventListeners() {
   searchInput.addEventListener(
     'focus',
     () => {
-      if (state.suggestions.length > 0) {
-        renderSuggestions();
-      }
+      renderSuggestions();
     },
     true
   );
@@ -132,40 +128,22 @@ async function getSuggestions(location = 'a') {
 // }
 
 function init() {
-  getSuggestions().then(
-    () => (searchInput.placeholder = 'find and pick a place from the list')
-  );
+  setSpinner('pending');
+  getSuggestions().then(() => {
+    setSpinner('success');
+  });
   initEventListeners();
   drawSpinner();
 }
 
-// SPINNER
-
-const canvas = document.querySelector('.spinner');
-const ctx = canvas.getContext('2d');
-
-const rnd = Math.random() * 10;
-
-let startAngle = 0;
-let drawId = 0;
-
-function drawSpinner() {
-  ctx.clearRect(0, 0, 300, 300);
-  ctx.beginPath();
-  ctx.arc(150, 150, 100, 0, 2 * Math.PI);
-  ctx.lineWidth = 20;
-  ctx.strokeStyle = '#32363e';
-  ctx.stroke();
-
-  // pink spinner itself
-  ctx.beginPath();
-  ctx.arc(150, 150, 100, startAngle + rnd, 1 + startAngle + rnd);
-  ctx.lineWidth = 20;
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = '#4aff4a';
-  ctx.stroke();
-  startAngle += 0.1;
-  drawId = requestAnimationFrame(drawSpinner);
+function setSpinner(status) {
+  if (status === 'success') {
+    spinner.classList.add('spinner--hide');
+    spinner.style.display = 'none';
+  } else if (status === 'pending') {
+    spinner.style.display = 'flex';
+    spinner.classList.remove('spinner--hide');
+  }
 }
 
 init();
