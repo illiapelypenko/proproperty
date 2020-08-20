@@ -4,12 +4,15 @@ import { drawSpinner, spinner } from './components/spinner';
 const searchInput = document.querySelector('.search__input');
 const searchSuggestions = document.querySelector('.search__suggestions');
 const goBtn = document.querySelector('.search__go-btn');
+const myLocationBtn = document.querySelector('.search__myLocation-btn');
 const searchList = document.querySelector('.recent-searches__items');
 
 const state = {
   currentSearchItem: {}, // sugestion
   suggestions: [], // sugestion[]
-  recentSearches: [], // {suggestion, listForSale}[]
+  recentSearches: [], // {suggestion[] }
+  showSuggestions: false,
+  currentSearchListItem: {}, // recentSearch
 };
 
 async function renderSuggestions() {
@@ -23,14 +26,18 @@ async function renderSuggestions() {
     li.innerHTML = `${suggestion.area_type}, ${suggestion.city}, ${suggestion.state_code}`;
     searchSuggestions.appendChild(li);
   }
-  if (!searchSuggestions.classList.contains('search__suggestions--show'))
-    searchSuggestions.classList.add('search__suggestions--show');
+  if (state.showSuggestions) {
+    searchSuggestions.style.height =
+      (state.suggestions.length > 4 ? 4 * 56 : state.suggestions.length * 56) +
+      'px';
+  }
 }
 
 function initEventListeners() {
   searchInput.addEventListener(
     'focus',
     () => {
+      state.showSuggestions = true;
       renderSuggestions();
     },
     true
@@ -44,22 +51,45 @@ function initEventListeners() {
   searchInput.addEventListener(
     'blur',
     () => {
-      searchSuggestions.classList.remove('search__suggestions--show');
+      searchSuggestions.style.height = '0px';
+      state.showSuggestions = false;
     },
     true
   );
 
-  // searchSuggestions.addEventListener('click', e => {
-  //   if (e.target.type === 'LI') {
-  //     state.currentSearchItem = state.suggestions.find(
-  //       item => item._id === e.target.dataset.key
-  //     );
-  //     searchInput.value = state.currentSearchItem.city;
-  //   }
-  // });
+  searchSuggestions.addEventListener('click', e => {
+    state.currentSearchItem = state.suggestions.find(
+      item => item._id === e.target.dataset.key
+    );
+    searchInput.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
+  });
+
+  myLocationBtn.addEventListener('click', () => {
+    // get random location from suggestion list
+    state.currentSearchItem =
+      state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
+    searchInput.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
+  });
 
   goBtn.addEventListener('click', e => {
-    getProperties();
+    // getProperties();
+    state.recentSearches.unshift(state.currentSearchItem);
+    localStorage.setItem(
+      'recentSearches',
+      JSON.stringify(state.recentSearches)
+    );
+    searchInput.value = '';
+    updateSearchList();
+  });
+
+  searchList.addEventListener('click', e => {
+    if (e.target.nodeName === 'SPAN') {
+      const index = Array.from(searchList.children).findIndex(
+        item => item.outerText === e.target.innerText
+      );
+      state.currentSearchListItem = state.recentSearches[index];
+      console.log(state.currentSearchListItem);
+    }
   });
 }
 
@@ -77,7 +107,7 @@ async function getSuggestions(location = 'a') {
         headers: {
           'x-rapidapi-host': 'realtor.p.rapidapi.com',
           'x-rapidapi-key':
-            '578f2bbbc4mshbe9e783d81242a9p10564djsnaa7555df70d7',
+            '912915357fmshd8b3c8fc8fcaa14p122a7ejsnb050b17596f1',
         },
       }
     );
@@ -89,6 +119,7 @@ async function getSuggestions(location = 'a') {
 }
 
 // async function getProperties() {
+//   setSpinner('pending');
 //   try {
 //     const res = await fetch(
 //       `https://realtor.p.rapidapi.com/properties/v2/list-for-sale?sort=relevance&city=${encodeURI(
@@ -101,33 +132,40 @@ async function getSuggestions(location = 'a') {
 //         headers: {
 //           'x-rapidapi-host': 'realtor.p.rapidapi.com',
 //           'x-rapidapi-key':
-//             '578f2bbbc4mshbe9e783d81242a9p10564djsnaa7555df70d7',
+//             '912915357fmshd8b3c8fc8fcaa14p122a7ejsnb050b17596f1',
 //         },
 //       }
 //     );
-//     state.recentSearches.push(await res.json());
-//     localStorage.setItem(
-//       'recentSearches',
-//       JSON.stringify(state.recentSearches)
-//     );
-//     updateSearchList();
+//     setSpinner('success');
 //   } catch (e) {
 //     console.log(e);
 //   }
 // }
 
-// function updateSearchList() {
-//   console.log(state.recentSearches);
-//   let searchListInnerHtml = '';
-//   for (let search of state.recentSearches) {
-//     searchListInnerHtml += `<li class="recent-searches__item"><span>Search #${
-//       state.recentSearches.indexOf(search) + 1
-//     } (${search.properties.length})</span></li>`;
-//   }
-//   searchList.innerHTML = searchListInnerHtml;
-// }
+function updateSearchList() {
+  while (searchList.firstChild) {
+    searchList.removeChild(searchList.firstChild);
+  }
+  for (let search of state.recentSearches) {
+    // if (searchList.children.length < 5) {
+    const li = document.createElement('li');
+    li.classList.add('recent-searches__item');
+    const span = document.createElement('span');
+    li.appendChild(span);
+    span.innerHTML = `Search #${state.recentSearches.indexOf(search) + 1} ${
+      search.area_type
+    }, ${search.city}`;
+    searchList.appendChild(li);
+    // }
+  }
+}
 
 function init() {
+  const recentSearchesInStorage = JSON.parse(
+    localStorage.getItem('recentSearches')
+  );
+  state.recentSearches = recentSearchesInStorage ? recentSearchesInStorage : [];
+  updateSearchList();
   setSpinner('pending');
   getSuggestions().then(() => {
     setSpinner('success');
