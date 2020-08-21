@@ -7,7 +7,7 @@ import {
   GO_BUTTON,
 } from '../index';
 import { renderSuggestions, renderSearchList } from './view';
-import { getSuggestions } from './api';
+import { getSuggestions, getProperties } from './api';
 
 function onFocus() {
   state.showSuggestions = true;
@@ -15,8 +15,12 @@ function onFocus() {
 }
 
 async function onInput(e) {
-  await getSuggestions(e.target.value);
-  renderSuggestions();
+  try {
+    await getSuggestions(e.target.value);
+    renderSuggestions();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function onBlur() {
@@ -25,19 +29,20 @@ function onBlur() {
 }
 
 function onSuggestionClick(e) {
-  state.currentSearchItem = state.suggestions.find(
-    item => item._id === e.target.dataset.key
+  if (e.target.nodeName !== 'LI') return;
+  const index = Array.from(SUGGESTION_LIST.children).findIndex(
+    item => item.outerText === e.target.innerText
   );
-  SEARCH_TEXT_INPUT.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
+  state.currentSearchItem = state.suggestions[index];
+  const { area_type, city, state_code } = state.currentSearchItem;
+  SEARCH_TEXT_INPUT.value = `${area_type}, ${city}, ${state_code}`;
 }
 function onMyLocationClick() {
   // get random location from suggestion list
-  state.currentSearchItem =
-    state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
+  state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
   SEARCH_TEXT_INPUT.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
 }
 function onGoButtonClick() {
-  // getProperties();
   state.recentSearches.unshift(state.currentSearchItem);
   while (state.recentSearches.length > 5) {
     state.recentSearches.pop();
@@ -47,13 +52,18 @@ function onGoButtonClick() {
   renderSearchList();
 }
 
-function onRecentSearchClick(e) {
-  if (e.target.nodeName === 'SPAN') {
+async function onRecentSearchClick(e) {
+  try {
+    if (e.target.nodeName !== 'SPAN') return;
     const index = Array.from(RECENT_SEARCHES_LIST.children).findIndex(
       item => item.outerText === e.target.innerText
     );
     state.currentSearchListItem = state.recentSearches[index];
     console.log(state.currentSearchListItem);
+    await getProperties();
+    console.log(state.properties);
+  } catch (err) {
+    console.log(err);
   }
 }
 

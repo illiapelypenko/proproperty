@@ -7,12 +7,8 @@ import { initEventListeners } from './components/eventListeners';
 export const SEARCH_TEXT_INPUT = document.querySelector('.search__input');
 export const SUGGESTION_LIST = document.querySelector('.search__suggestions');
 export const GO_BUTTON = document.querySelector('.search__go-btn');
-export const MY_LOCATION_BUTTON = document.querySelector(
-  '.search__myLocation-btn'
-);
-export const RECENT_SEARCHES_LIST = document.querySelector(
-  '.recent-searches__items'
-);
+export const MY_LOCATION_BUTTON = document.querySelector('.search__myLocation-btn');
+export const RECENT_SEARCHES_LIST = document.querySelector('.recent-searches__items');
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -20,6 +16,7 @@ export const state = {
   recentSearches: [], // {suggestion[] }
   showSuggestions: false,
   currentSearchListItem: {}, // recentSearch
+  properties: [], //
 };
 
 function setRecentSearchesFromLocalStorage() {
@@ -36,8 +33,8 @@ async function init() {
     renderSearchList();
     initEventListeners();
     await getSuggestions();
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   } finally {
     setSpinner(false);
   }

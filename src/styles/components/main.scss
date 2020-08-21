@@ -24,14 +24,9 @@
         position: relative;
 
         .search__suggestions {
-          // transform-origin: top center;
           height: 0;
           transition: height 0.5s;
           overflow-y: auto;
-
-          // &--show {
-          //   // height: 224px; // search for auto height which work with transition
-          // }
 
           .search__suggestion {
             padding: 1rem 2rem;

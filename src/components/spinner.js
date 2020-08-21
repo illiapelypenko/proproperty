@@ -19,13 +19,7 @@ export function drawSpinner() {
 
   // spinner itself
   ctx.beginPath();
-  ctx.arc(
-    spinnerX,
-    spinnerY,
-    spinnerX - lineWidth,
-    startAngle + rnd,
-    1 + startAngle + rnd
-  );
+  ctx.arc(spinnerX, spinnerY, spinnerX - lineWidth, startAngle + rnd, 1 + startAngle + rnd);
   ctx.lineWidth = lineWidth;
   ctx.lineCap = 'round';
   ctx.strokeStyle = '#4aff4a';
