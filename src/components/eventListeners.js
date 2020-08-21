@@ -43,6 +43,11 @@ function onMyLocationClick() {
   SEARCH_TEXT_INPUT.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
 }
 function onGoButtonClick() {
+  if (!state.currentSearchItem.city) {
+    SEARCH_TEXT_INPUT.focus();
+    return;
+  }
+
   state.recentSearches.unshift(state.currentSearchItem);
   while (state.recentSearches.length > 5) {
     state.recentSearches.pop();
@@ -50,6 +55,7 @@ function onGoButtonClick() {
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
   SEARCH_TEXT_INPUT.value = '';
   renderSearchList();
+  state.currentSearchItem = {};
 }
 
 async function onRecentSearchClick(e) {
