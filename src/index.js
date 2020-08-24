@@ -1,5 +1,5 @@
 import './styles/main.scss';
-import { setSpinner } from './components/spinner';
+import { createSpinner } from './components/spinner';
 import { renderSearchList } from './components/view';
 import { getSuggestions } from './components/api';
 import { initEventListeners } from './components/eventListeners';
@@ -9,6 +9,11 @@ export const SUGGESTION_LIST = document.querySelector('.search__suggestions');
 export const GO_BUTTON = document.querySelector('.search__go-btn');
 export const MY_LOCATION_BUTTON = document.querySelector('.search__myLocation-btn');
 export const RECENT_SEARCHES_LIST = document.querySelector('.recent-searches__items');
+export const PROPERTY_LIST = document.querySelector('.property-list');
+export const MATCHES_COUNT = document.querySelector('.property-container__matches');
+export const LOADMORE_BUTTON = document.querySelector('.loadMore-btn');
+
+const setSuggestionSpinner = createSpinner('.spinner', '.spinner-canvas');
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -16,7 +21,8 @@ export const state = {
   recentSearches: [], // {suggestion[] }
   showSuggestions: false,
   currentSearchListItem: {}, // recentSearch
-  properties: [], //
+  properties: [],
+  propertyOffset: 0,
 };
 
 function setRecentSearchesFromLocalStorage() {
@@ -28,7 +34,7 @@ function setRecentSearchesFromLocalStorage() {
 
 async function init() {
   try {
-    setSpinner(true);
+    setSuggestionSpinner(true);
     setRecentSearchesFromLocalStorage();
     renderSearchList();
     initEventListeners();
@@ -36,7 +42,7 @@ async function init() {
   } catch (err) {
     console.log(err);
   } finally {
-    setSpinner(false);
+    setSuggestionSpinner(false);
   }
 }
 

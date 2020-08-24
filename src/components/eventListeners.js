@@ -5,8 +5,10 @@ import {
   RECENT_SEARCHES_LIST,
   MY_LOCATION_BUTTON,
   GO_BUTTON,
+  LOADMORE_BUTTON,
+  PROPERTY_LIST,
 } from '../index';
-import { renderSuggestions, renderSearchList } from './view';
+import { renderSuggestions, renderSearchList, renderProperties } from './view';
 import { getSuggestions, getProperties } from './api';
 
 function onFocus() {
@@ -65,12 +67,19 @@ async function onRecentSearchClick(e) {
       item => item.outerText === e.target.innerText
     );
     state.currentSearchListItem = state.recentSearches[index];
-    console.log(state.currentSearchListItem);
+    while (PROPERTY_LIST.firstChild) {
+      PROPERTY_LIST.removeChild(PROPERTY_LIST.firstChild);
+    }
     await getProperties();
-    console.log(state.properties);
+    renderProperties();
   } catch (err) {
     console.log(err);
   }
+}
+
+function onLoadMoreButtonClick() {
+  state.propertyOffset = state.propertyOffset + 20;
+  renderProperties();
 }
 
 export function initEventListeners() {
@@ -81,4 +90,5 @@ export function initEventListeners() {
   MY_LOCATION_BUTTON.addEventListener('click', onMyLocationClick);
   GO_BUTTON.addEventListener('click', onGoButtonClick);
   RECENT_SEARCHES_LIST.addEventListener('click', onRecentSearchClick);
+  LOADMORE_BUTTON.addEventListener('click', onLoadMoreButtonClick);
 }

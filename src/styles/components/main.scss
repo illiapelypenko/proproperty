@@ -118,16 +118,22 @@
     align-items: center;
     padding: 40px $defaultSidePadding;
 
-    .property-container__matches {
-      text-align: center;
-      color: #fff;
-      padding-bottom: 40px;
-      font-size: 1.5rem;
-      font-weight: bold;
+    .property-container__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 500px;
+
+      .property-container__matches {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
     }
 
     .property-list {
       width: 500px;
+      margin: 40px 0px;
 
       .property-item {
         display: flex;
@@ -160,6 +166,9 @@
           margin-left: 20px;
         }
       }
+    }
+    .loadMore-btn {
+      display: none;
     }
   }
 }
