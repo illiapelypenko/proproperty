@@ -12,83 +12,43 @@
       <button>Faves</button>
     </header>
     <main class="main">
-      <section class="search">
-        <p class="search__instruction">
-          Use the form below to search for houses to buy. You can search by place-name, postcode, or
-          click 'My location', to search in your current location!
-        </p>
-        <form class="search__form">
-          <p class="search__tip">Search and choose a suggested location from the list below</p>
-          <div class="search__input-container">
-            <input class="search__input" type="text" placeholder="USA city" />
-            <ul class="search__suggestions"></ul>
+      <section class="search-container">
+        <div class="search">
+          <p class="search__instruction">
+            Use the form below to search for houses to buy. You can search by place-name, postcode,
+            or click 'My location', to search in your current location!
+          </p>
+          <form class="search__form">
+            <p class="search__tip">Search and choose a suggested location from the list below</p>
+            <div class="search__input-container">
+              <input class="search__input" type="text" placeholder="USA city" />
+              <ul class="search__suggestions"></ul>
+            </div>
+            <div class="search__buttons">
+              <input type="button" class="search__go-btn" value="Go" />
+              <input type="button" class="search__myLocation-btn" value="My locations" />
+            </div>
+          </form>
+          <div class="search-spinner spinner">
+            <canvas class="search-spinner__canvas spinner-canvas" width="400" height="400"></canvas>
           </div>
-          <div class="search__buttons">
-            <input type="button" class="search__go-btn" value="Go" />
-            <input type="button" class="search__myLocation-btn" value="My locations" />
-          </div>
-        </form>
-        <div class="spinner">
-          <canvas class="spinner-canvas" width="400" height="400"></canvas>
         </div>
-      </section>
-      <section class="search-results">
-        <div class="recent-searches">
-          <p class="recent-searches__text">Recent searches:</p>
-          <ul class="recent-searches__items"></ul>
+        <div class="search-results">
+          <div class="recent-searches">
+            <p class="recent-searches__text">Recent searches:</p>
+            <ul class="recent-searches__items"></ul>
+          </div>
         </div>
       </section>
       <section class="property-container">
+        <div class="property-spinner spinner">
+          <canvas class="property-spinner__canvas spinner-canvas" width="400" height="400"></canvas>
+        </div>
         <div class="property-container__header">
           <input type="button" class="back-btn" value="Back" />
           <p class="property-container__matches">matches</p>
         </div>
-        <ul class="property-list">
-          <!-- <li class="property-item">
-            <img
-              class="property-item__thumbnail"
-              src="https://ap.rdcpix.com/1abc061f23232b1dcfe6757bd399130bl-m2764612806x.jpg"
-              alt="thumbnail"
-            />
-            <div class="property-item__info">
-              <p class="property-item__price">$ 135000</p>
-              <p class="property-item__location">Atlanta, 1150 Collier Rd NW Apt K23</p>
-            </div>
-          </li>
-          <li class="property-item">
-            <img
-              class="property-item__thumbnail"
-              src="https://ap.rdcpix.com/1abc061f23232b1dcfe6757bd399130bl-m2764612806x.jpg"
-              alt="thumbnail"
-            />
-            <div class="property-item__info">
-              <p class="property-item__price">$ 135000</p>
-              <p class="property-item__location">Atlanta, 1150 Collier Rd NW Apt K23</p>
-            </div>
-          </li>
-          <li class="property-item">
-            <img
-              class="property-item__thumbnail"
-              src="https://ap.rdcpix.com/1abc061f23232b1dcfe6757bd399130bl-m2764612806x.jpg"
-              alt="thumbnail"
-            />
-            <div class="property-item__info">
-              <p class="property-item__price">$ 135000</p>
-              <p class="property-item__location">Atlanta, 1150 Collier Rd NW Apt K23</p>
-            </div>
-          </li>
-          <li class="property-item">
-            <img
-              class="property-item__thumbnail"
-              src="https://ap.rdcpix.com/1abc061f23232b1dcfe6757bd399130bl-m2764612806x.jpg"
-              alt="thumbnail"
-            />
-            <div class="property-item__info">
-              <p class="property-item__price">$ 135000</p>
-              <p class="property-item__location">Atlanta, 1150 Collier Rd NW Apt K23</p>
-            </div>
-          </li> -->
-        </ul>
+        <ul class="property-list"></ul>
         <input type="button" class="loadMore-btn" value="Load more" />
       </section>
     </main>

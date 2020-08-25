@@ -1,39 +1,44 @@
+import { state } from '../index';
 import {
-  state,
-  SUGGESTION_LIST,
-  RECENT_SEARCHES_LIST,
-  PROPERTY_LIST,
-  MATCHES_COUNT,
-  LOADMORE_BUTTON,
-} from '../index';
+  suggestionList,
+  recentSearchList,
+  propertyList,
+  matchesCount,
+  loadMoreButton,
+} from './domConsts';
 
 export function renderSuggestions() {
-  while (SUGGESTION_LIST.firstChild) {
-    SUGGESTION_LIST.removeChild(SUGGESTION_LIST.firstChild);
+  const suggestionToShow = 4;
+  const suggestionHeight = 56;
+
+  while (suggestionList.firstChild) {
+    suggestionList.removeChild(suggestionList.firstChild);
   }
+
   const { suggestions, showSuggestions } = state;
+
   for (let suggestion of suggestions) {
     const { area_type, city, state_code } = suggestion;
     const li = document.createElement('li');
+
     li.classList.add('search__suggestion');
     li.innerHTML = `${area_type}, ${city}, ${state_code}`;
-    SUGGESTION_LIST.appendChild(li);
+    suggestionList.appendChild(li);
   }
+
   if (showSuggestions) {
-    const suggestionToShow = 4;
-    const suggestionHeight = 56;
-    SUGGESTION_LIST.style.height =
-      (suggestions.length > suggestionToShow
-        ? suggestionToShow * suggestionHeight
-        : suggestions.length * suggestionHeight) + 'px';
+    suggestionList.style.height =
+      suggestions.slice(0, suggestionToShow).length * suggestionHeight + 'px';
   }
 }
 
 export function renderSearchList() {
-  while (RECENT_SEARCHES_LIST.firstChild) {
-    RECENT_SEARCHES_LIST.removeChild(RECENT_SEARCHES_LIST.firstChild);
+  while (recentSearchList.firstChild) {
+    recentSearchList.removeChild(recentSearchList.firstChild);
   }
+
   const { recentSearches } = state;
+
   for (const search of recentSearches) {
     const { city, area_type } = search;
     const li = document.createElement('li');
@@ -41,17 +46,20 @@ export function renderSearchList() {
     const span = document.createElement('span');
     li.appendChild(span);
     span.innerHTML = `Search #${recentSearches.indexOf(search) + 1} ${area_type}, ${city}`;
-    RECENT_SEARCHES_LIST.appendChild(li);
+    recentSearchList.appendChild(li);
   }
 }
 
 export function renderProperties() {
-  if (state.properties.length - state.propertyOffset > 20) LOADMORE_BUTTON.style.display = 'block';
-  else LOADMORE_BUTTON.style.display = 'none';
+  if (state.properties.length - state.propertyOffset > 20) loadMoreButton.style.display = 'block';
+  else loadMoreButton.style.display = 'none';
+
   const toRender = 20;
   let properties = state.properties.slice(state.propertyOffset, state.propertyOffset + toRender);
+  matchesCount.innerHTML = `${state.propertyOffset + properties.length} of ${
+    state.properties.length
+  } matches`;
 
-  MATCHES_COUNT.innerHTML = `${properties.length} matches`;
   for (let property of properties) {
     const {
       address: { city, line },
@@ -85,6 +93,6 @@ export function renderProperties() {
     div.appendChild(priceElement);
     div.appendChild(locationElement);
 
-    PROPERTY_LIST.appendChild(li);
+    propertyList.appendChild(li);
   }
 }

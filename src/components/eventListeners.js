@@ -1,22 +1,28 @@
 import {
-  state,
-  SEARCH_TEXT_INPUT,
-  SUGGESTION_LIST,
-  RECENT_SEARCHES_LIST,
-  MY_LOCATION_BUTTON,
-  GO_BUTTON,
-  LOADMORE_BUTTON,
-  PROPERTY_LIST,
-} from '../index';
+  searchTextInput,
+  suggestionList,
+  recentSearchList,
+  myLocationButton,
+  goButton,
+  loadMoreButton,
+  propertyList,
+  searchContainer,
+  propertyContainer,
+  backButton,
+  propertySpinnerContainer,
+  propertySpinnerCanvas,
+} from './domConsts';
+import { state } from '../index';
 import { renderSuggestions, renderSearchList, renderProperties } from './view';
 import { getSuggestions, getProperties } from './api';
+import Spinner from './spinner';
 
-function onFocus() {
+function onSearchFocus() {
   state.showSuggestions = true;
   renderSuggestions();
 }
 
-async function onInput(e) {
+async function onSearchInput(e) {
   try {
     await getSuggestions(e.target.value);
     renderSuggestions();
@@ -25,55 +31,73 @@ async function onInput(e) {
   }
 }
 
-function onBlur() {
-  SUGGESTION_LIST.style.height = '0px';
+function onSearchBlur() {
+  suggestionList.style.height = '0px';
   state.showSuggestions = false;
 }
 
 function onSuggestionClick(e) {
   if (e.target.nodeName !== 'LI') return;
-  const index = Array.from(SUGGESTION_LIST.children).findIndex(
+
+  const index = Array.from(suggestionList.children).findIndex(
     item => item.outerText === e.target.innerText
   );
+
   state.currentSearchItem = state.suggestions[index];
   const { area_type, city, state_code } = state.currentSearchItem;
-  SEARCH_TEXT_INPUT.value = `${area_type}, ${city}, ${state_code}`;
+  searchTextInput.value = `${area_type}, ${city}, ${state_code}`;
 }
-function onMyLocationClick() {
+
+function onMyLocationButtonClick() {
   // get random location from suggestion list
   state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
-  SEARCH_TEXT_INPUT.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
+  searchTextInput.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
 }
+
 function onGoButtonClick() {
   if (!state.currentSearchItem.city) {
-    SEARCH_TEXT_INPUT.focus();
+    searchTextInput.focus();
     return;
   }
 
   state.recentSearches.unshift(state.currentSearchItem);
+
   while (state.recentSearches.length > 5) {
     state.recentSearches.pop();
   }
+
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
-  SEARCH_TEXT_INPUT.value = '';
+  searchTextInput.value = '';
   renderSearchList();
   state.currentSearchItem = {};
 }
 
 async function onRecentSearchClick(e) {
+  const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
+
   try {
     if (e.target.nodeName !== 'SPAN') return;
-    const index = Array.from(RECENT_SEARCHES_LIST.children).findIndex(
+
+    state.propertyOffset = 0;
+    const index = Array.from(recentSearchList.children).findIndex(
       item => item.outerText === e.target.innerText
     );
     state.currentSearchListItem = state.recentSearches[index];
-    while (PROPERTY_LIST.firstChild) {
-      PROPERTY_LIST.removeChild(PROPERTY_LIST.firstChild);
+
+    while (propertyList.firstChild) {
+      propertyList.removeChild(propertyList.firstChild);
     }
+
+    propertyContainer.style.display = 'flex';
+    searchContainer.style.display = 'none';
+
+    spinner.toogleVisibility(true);
     await getProperties();
     renderProperties();
   } catch (err) {
     console.log(err);
+  } finally {
+    spinner.toogleVisibility(false);
   }
 }
 
@@ -82,13 +106,19 @@ function onLoadMoreButtonClick() {
   renderProperties();
 }
 
+function onBackButtonClick() {
+  propertyContainer.style.display = 'none';
+  searchContainer.style.display = 'flex';
+}
+
 export function initEventListeners() {
-  SEARCH_TEXT_INPUT.addEventListener('focus', onFocus, true);
-  SEARCH_TEXT_INPUT.addEventListener('blur', onBlur, true);
-  SEARCH_TEXT_INPUT.addEventListener('input', onInput);
-  SUGGESTION_LIST.addEventListener('click', onSuggestionClick);
-  MY_LOCATION_BUTTON.addEventListener('click', onMyLocationClick);
-  GO_BUTTON.addEventListener('click', onGoButtonClick);
-  RECENT_SEARCHES_LIST.addEventListener('click', onRecentSearchClick);
-  LOADMORE_BUTTON.addEventListener('click', onLoadMoreButtonClick);
+  searchTextInput.addEventListener('focus', onSearchFocus, true);
+  searchTextInput.addEventListener('blur', onSearchBlur, true);
+  searchTextInput.addEventListener('input', onSearchInput);
+  suggestionList.addEventListener('click', onSuggestionClick);
+  myLocationButton.addEventListener('click', onMyLocationButtonClick);
+  goButton.addEventListener('click', onGoButtonClick);
+  recentSearchList.addEventListener('click', onRecentSearchClick);
+  loadMoreButton.addEventListener('click', onLoadMoreButtonClick);
+  backButton.addEventListener('click', onBackButtonClick);
 }
