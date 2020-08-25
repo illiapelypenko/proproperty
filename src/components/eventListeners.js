@@ -22,14 +22,23 @@ function onSearchFocus() {
   renderSuggestions();
 }
 
-async function onSearchInput(e) {
-  try {
-    await getSuggestions(e.target.value);
-    renderSuggestions();
-  } catch (err) {
-    console.log(err);
-  }
-}
+const onSearchInput = (() => {
+  // 1 sec delay before fetching data
+  let timeout;
+
+  return e => {
+    try {
+      const suggest = async () => {
+        await getSuggestions(e.target.value);
+        renderSuggestions();
+      };
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(suggest, 1000);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+})();
 
 function onSearchBlur() {
   suggestionList.style.height = '0px';

@@ -1,11 +1,10 @@
 import { state } from '../index';
 
-const KEY = '912915357fmshd8b3c8fc8fcaa14p122a7ejsnb050b17596f1';
+const KEY = '897733c2d3msh13b53444c4f53c4p152d7fjsn04123a994089';
+const propertiesBuffer = new Map();
 
 export async function getSuggestions(location = 'a') {
-  if (!location) {
-    location = 'a';
-  }
+  if (!location) location = 'a';
 
   try {
     const res = await fetch(
@@ -28,11 +27,11 @@ export async function getSuggestions(location = 'a') {
 }
 
 export async function getProperties() {
-  try {
-    const {
-      currentSearchListItem: { city, state_code },
-    } = state;
+  const { city, state_code } = state.currentSearchListItem;
+  const mapKey = JSON.stringify({ city, state_code });
+  if (propertiesBuffer.has(mapKey)) return (state.properties = propertiesBuffer.get(mapKey));
 
+  try {
     const res = await fetch(
       `https://realtor.p.rapidapi.com/properties/v2/list-for-sale?sort=relevance&city=${encodeURI(
         city
@@ -47,7 +46,7 @@ export async function getProperties() {
     );
 
     const data = await res.json();
-
+    propertiesBuffer.set(mapKey, data.properties);
     state.properties = data.properties;
   } catch (e) {
     console.log(e);

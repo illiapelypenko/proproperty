@@ -45,7 +45,7 @@ class Spinner {
       this.spinner.style.display = 'flex';
       this.spinner.classList.remove('spinner--hide');
     } else {
-      this.spinner.classList.add('spinner--hide');
+      this.spinner.classList.add('spinner--hide'); // for opacity transition before hiding
       this.spinner.style.display = 'none';
       cancelAnimationFrame(this.drawId);
     }
