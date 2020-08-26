@@ -1,0 +1,55 @@
+.property-faveslist-container {
+  width: 100%;
+  background-color: $main-color;
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px $defaultSidePadding;
+  display: none;
+  position: relative;
+
+  .property-faveslist-container__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+  }
+
+  .property-faveslist {
+    width: 500px;
+    margin: 40px 0px;
+
+    .property-item {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      background-color: $mainLight-color;
+      padding: 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+
+      &:hover {
+        background-color: $secondary-color;
+      }
+
+      .property-item__thumbnail {
+        width: 100px;
+        height: 100px;
+      }
+
+      .property-item__info {
+        color: #fff;
+        font-size: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 20px;
+      }
+    }
+  }
+}

@@ -9,28 +9,39 @@
   <body>
     <header class="header">
       <h1 class="header__logo">ProProperty</h1>
-      <button>Faves</button>
+      <button class="faves-btn">Faves</button>
     </header>
     <main class="main">
       <section class="search-container">
         <div class="search">
           <p class="search__instruction">
-            Use the form below to search for houses to buy. You can search by place-name, postcode,
-            or click 'My location', to search in your current location!
+            Use the form below to search for houses to buy. You can search by
+            place-name, postcode, or click 'My location', to search in your
+            current location!
           </p>
           <form class="search__form">
-            <p class="search__tip">Search and choose a suggested location from the list below</p>
+            <p class="search__tip">
+              Search and choose a suggested location from the list below
+            </p>
             <div class="search__input-container">
               <input class="search__input" type="text" placeholder="USA city" />
               <ul class="search__suggestions"></ul>
             </div>
             <div class="search__buttons">
               <input type="button" class="search__go-btn" value="Go" />
-              <input type="button" class="search__myLocation-btn" value="My locations" />
+              <input
+                type="button"
+                class="search__myLocation-btn"
+                value="My locations"
+              />
             </div>
           </form>
           <div class="search-spinner spinner">
-            <canvas class="search-spinner__canvas spinner-canvas" width="400" height="400"></canvas>
+            <canvas
+              class="search-spinner__canvas spinner-canvas"
+              width="400"
+              height="400"
+            ></canvas>
           </div>
         </div>
         <div class="search-results">
@@ -40,16 +51,62 @@
           </div>
         </div>
       </section>
-      <section class="property-container">
-        <div class="property-spinner spinner">
-          <canvas class="property-spinner__canvas spinner-canvas" width="400" height="400"></canvas>
+      <section class="property-list-container">
+        <div class="property-list-spinner spinner">
+          <canvas
+            class="property-list-spinner__canvas spinner-canvas"
+            width="400"
+            height="400"
+          ></canvas>
         </div>
-        <div class="property-container__header">
-          <input type="button" class="back-btn" value="Back" />
-          <p class="property-container__matches">matches</p>
+        <div class="property-list-container__header">
+          <button class="property-list-back-btn">Back</button>
+          <p class="property-list-container__matches">matches</p>
         </div>
         <ul class="property-list"></ul>
         <input type="button" class="loadMore-btn" value="Load more" />
+      </section>
+      <section class="property-page-container">
+        <div class="property-header">
+          <button class="property-details-back-btn">Back</button>
+          <h2>Property Details</h2>
+          <button class="addPropertyToFavs-btn">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="plus"
+              class="plus-icon"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="black"
+                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div class="property-details">
+          <span class="property-price">$200000</span>
+          <span class="property-address"
+            >25 Merrimac Way Unit B, Tyngsborough</span
+          >
+          <img
+            src="https://ap.rdcpix.com/b73f39861d1b4cd2c11757ac91bced81l-m3681480232x.jpg"
+            alt="sumbnail"
+            class="property-sumbnail"
+          />
+          <span class="property-furniture"></span>
+          <p class="property-summary"></p>
+        </div>
+      </section>
+      <section class="property-faveslist-container">
+        <div class="property-faveslist-container__header">
+          <button class="property-faveslist-back-btn">Main Page</button>
+        </div>
+        <ul class="property-faveslist"></ul>
       </section>
     </main>
   </body>

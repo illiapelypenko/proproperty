@@ -1,9 +1,12 @@
-import './styles/main.scss';
-import Spinner from './components/spinner';
-import { renderSearchList } from './components/view';
-import { getSuggestions } from './components/api';
-import { initEventListeners } from './components/eventListeners';
-import { searchSpinnerContainer, searchSpinnerCanvas } from './components/domConsts';
+import "./styles/main.scss";
+import Spinner from "./components/spinner";
+import { renderSearchList } from "./components/view";
+import { getSuggestions } from "./components/api";
+import { initEventListeners } from "./components/eventListeners";
+import {
+  searchSpinnerContainer,
+  searchSpinnerCanvas,
+} from "./components/domConsts";
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -13,10 +16,12 @@ export const state = {
   currentSearchListItem: {}, // recentSearch
   properties: [], // property[]
   propertyOffset: 0,
+  currentProperty: {},
+  favoriteProperties: [],
 };
 
 function setPersistedRecentSearches() {
-  const recentSearchesInStorage = localStorage.getItem('recentSearches');
+  const recentSearchesInStorage = localStorage.getItem("recentSearches");
 
   if (recentSearchesInStorage) {
     state.recentSearches = JSON.parse(recentSearchesInStorage);

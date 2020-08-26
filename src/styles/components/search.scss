@@ -1,0 +1,113 @@
+.search-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  .search {
+    position: relative;
+    background-color: $main-color;
+    padding: 40px $defaultSidePadding;
+    color: #fff;
+    flex: 0 1;
+
+    .search__instruction {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .search__form {
+      padding-top: 40px;
+      width: 500px;
+      margin: auto;
+
+      .search__tip {
+        margin-bottom: 5px;
+      }
+
+      .search__input-container {
+        position: relative;
+
+        .search__suggestions {
+          height: 0;
+          transition: height 0.5s;
+          overflow-y: auto;
+
+          .search__suggestion {
+            padding: 1rem 2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: $font-color;
+            width: 100%;
+            display: block;
+            background-color: #fff;
+            border-top: 1px solid gray;
+
+            &:hover {
+              background-color: $secondary-color;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .search__buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .search-results {
+    flex: 1 1;
+    padding: 40px 0px;
+    background-color: $mainLight-color;
+    color: #fff;
+
+    .recent-searches {
+      width: 500px;
+      margin: 0px auto;
+      display: flex;
+      flex-direction: column;
+
+      &__text {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding-bottom: 20px;
+        color: $secondary-color;
+        flex: 0 0;
+      }
+
+      &__items {
+        flex: 1 1;
+        border: 4px $secondary-color solid;
+        padding: 20px;
+        font-size: 1.2rem;
+        overflow-y: auto;
+
+        li {
+          padding: 5px 0px;
+
+          &:first-child {
+            padding-top: 0px;
+          }
+
+          &:last-child {
+            padding-bottom: 0px;
+          }
+
+          span {
+            cursor: pointer;
+
+            &:hover {
+              color: $secondary-color;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}

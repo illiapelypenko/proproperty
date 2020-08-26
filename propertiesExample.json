@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "build": "3.23.118",
+    "schema": "core.3",
+    "tracking_params": {
+      "channel": "for_sale",
+      "siteSection": "for_sale",
+      "city": "Tyngsborough",
+      "county": "unknown",
+      "neighborhood": "unknown",
+      "searchCityState": "Tyngsborough, MA",
+      "state": "MA",
+      "zip": "unknown",
+      "srpPropertyStatus": "srp:for_sale",
+      "listingActivity": "unknown",
+      "propertyStatus": "for_sale",
+      "propertyType": "any",
+      "searchBathrooms": "any",
+      "searchBedrooms": "any",
+      "searchMaxPrice": "unknown",
+      "searchMinPrice": "unknown",
+      "searchRadius": "unknown",
+      "searchHouseSqft": "any",
+      "searchLotSqft": "any",
+      "searchResults": "19",
+      "sortResults": "relevance",
+      "searchCoordinates": "unknown",
+      "version": "1.0"
+    },
+    "tracking": "type|meta|data|resource_type|property_list|query|client_id|rdc_mobile_native,13.3.0.53|prop_status|for_sale|schema|core.3|limit|offset|city|Tyngsborough|state_code|MA|sort|relevance|count|total^5K|0|J|J^^$0|1|2|$3|4|5|$6|7|8|9|A|B|C|M|D|N|E|F|G|H|I|J]|8|9|K|O|L|P]]",
+    "returned_rows": 19,
+    "matching_rows": 19
+  },
+  "properties": [
+    {
+      "property_id": "M4340918435",
+      "listing_id": "2920450488",
+      "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/25-Merrimac-Way-Unit-B_Tyngsboro_MA_01879_M43409-18435",
+      "prop_type": "condo",
+      "prop_sub_type": "townhomes",
+      "address": {
+        "city": "Tyngsborough",
+        "line": "25 Merrimac Way Unit B",
+        "postal_code": "01879",
+        "state_code": "MA",
+        "state": "Massachusetts",
+        "county": "Middlesex",
+        "fips_code": "25017",
+        "time_zone": "America/New_York",
+        "lat": 42.663411,
+        "lon": -71.408312
+      },
+      "branding": {
+        "listing_office": {
+          "list_item": {
+            "name": "Access",
+            "photo": null,
+            "phone": null,
+            "slogan": null,
+            "show_realtor_logo": false,
+            "link": null,
+            "accent_color": null
+          }
+        }
+      },
+      "prop_status": "for_sale",
+      "price": 299999,
+      "baths_half": 1,
+      "baths_full": 1,
+      "baths": 2,
+      "beds": 2,
+      "building_size": { "size": 1026, "units": "sqft" },
+      "open_houses": [
+        {
+          "start_date": "2020-08-28T20:00:00.000Z",
+          "end_date": "2020-08-28T22:00:00.000Z",
+          "time_zone": "EST",
+          "dst": true
+        },
+        {
+          "start_date": "2020-08-29T15:00:00.000Z",
+          "end_date": "2020-08-29T17:00:00.000Z",
+          "time_zone": "EST",
+          "dst": true
+        }
+      ],
+      "agents": [{ "primary": true, "photo": null, "name": "Dot Collection" }],
+      "office": { "id": "bf733d8a933c1601697f364223fc7ecb", "name": "Access" },
+      "last_update": "2020-08-25T10:38:00Z",
+      "client_display_flags": {
+        "presentation_status": "for_sale",
+        "is_showcase": false,
+        "lead_form_phone_required": true,
+        "price_change": 0,
+        "is_co_broke_email": true,
+        "has_open_house": true,
+        "is_co_broke_phone": false,
+        "is_new_listing": true,
+        "is_new_plan": false,
+        "is_turbo": false,
+        "is_office_standard_listing": false,
+        "suppress_map_pin": false,
+        "show_contact_a_lender_in_lead_form": false,
+        "show_veterans_united_in_lead_form": false,
+        "flip_the_market_enabled": true,
+        "is_showcase_choice_enabled": false
+      },
+      "lead_forms": {
+        "form": {
+          "name": { "required": true, "minimum_character_count": 1 },
+          "email": { "required": true, "minimum_character_count": 5 },
+          "phone": {
+            "required": true,
+            "minimum_character_count": 10,
+            "maximum_character_count": 11
+          },
+          "message": { "required": false, "minimum_character_count": 0 },
+          "show": true
+        },
+        "show_agent": false,
+        "show_broker": false,
+        "show_builder": false,
+        "show_contact_a_lender": false,
+        "show_veterans_united": false,
+        "form_type": "classic",
+        "lead_type": "co_broke",
+        "is_lcm_enabled": false,
+        "flip_the_market_enabled": true,
+        "local_phone": "(978)307-6787",
+        "local_phones": { "comm_console_mweb": "(978)307-6787" },
+        "show_text_leads": true,
+        "cashback_enabled": true
+      },
+      "photo_count": 14,
+      "thumbnail": "https://ap.rdcpix.com/b73f39861d1b4cd2c11757ac91bced81l-m3681480232x.jpg",
+      "page_no": 1,
+      "rank": 1,
+      "list_tracking": "type|property|data|prop_id|4340918435|list_id|2920450488|page|rank|list_branding|listing_agent|listing_office|property_status|product_code|advantage_code^1|1|0|1|1|G|0^^$0|1|2|$3|4|5|6|7|F|8|G|9|$A|H|B|I]|C|J|D|K|E|L]]",
+      "mls": {
+        "name": "MLSPIN",
+        "id": "72715128",
+        "plan_id": null,
+        "abbreviation": "BSMA",
+        "type": "mls"
+      }
+    }
+  ]
+}

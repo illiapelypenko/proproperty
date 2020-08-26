@@ -1,11 +1,23 @@
-import { state } from '../index';
+import { state } from "../index";
 import {
   suggestionList,
   recentSearchList,
   propertyList,
   matchesCount,
   loadMoreButton,
-} from './domConsts';
+  propertyPageContainer,
+  searchContainer,
+  propertyContainer,
+  propertySummary,
+  propertyFurniture,
+  propertySumbnail,
+  propertyAddress,
+  propertyPrice,
+  propertyFaveslistContainer,
+  propertyFaveslist,
+} from "./domConsts";
+
+import { onPropertyClick } from "./eventListeners";
 
 export function renderSuggestions() {
   const suggestionToShow = 4;
@@ -19,16 +31,16 @@ export function renderSuggestions() {
 
   for (let suggestion of suggestions) {
     const { area_type, city, state_code } = suggestion;
-    const li = document.createElement('li');
+    const li = document.createElement("li");
 
-    li.classList.add('search__suggestion');
+    li.classList.add("search__suggestion");
     li.innerHTML = `${area_type}, ${city}, ${state_code}`;
     suggestionList.appendChild(li);
   }
 
   if (showSuggestions) {
     suggestionList.style.height =
-      suggestions.slice(0, suggestionToShow).length * suggestionHeight + 'px';
+      suggestions.slice(0, suggestionToShow).length * suggestionHeight + "px";
   }
 }
 
@@ -41,21 +53,27 @@ export function renderSearchList() {
 
   for (const search of recentSearches) {
     const { city, area_type } = search;
-    const li = document.createElement('li');
-    li.classList.add('recent-searches__item');
-    const span = document.createElement('span');
+    const li = document.createElement("li");
+    li.classList.add("recent-searches__item");
+    const span = document.createElement("span");
     li.appendChild(span);
-    span.innerHTML = `Search #${recentSearches.indexOf(search) + 1} ${area_type}, ${city}`;
+    span.innerHTML = `Search #${
+      recentSearches.indexOf(search) + 1
+    } ${area_type}, ${city}`;
     recentSearchList.appendChild(li);
   }
 }
 
 export function renderProperties() {
-  if (state.properties.length - state.propertyOffset > 20) loadMoreButton.style.display = 'block';
-  else loadMoreButton.style.display = 'none';
+  if (state.properties.length - state.propertyOffset > 20)
+    loadMoreButton.style.display = "block";
+  else loadMoreButton.style.display = "none";
 
   const toRender = 20;
-  let properties = state.properties.slice(state.propertyOffset, state.propertyOffset + toRender);
+  let properties = state.properties.slice(
+    state.propertyOffset,
+    state.propertyOffset + toRender
+  );
   matchesCount.innerHTML = `${state.propertyOffset + properties.length} of ${
     state.properties.length
   } matches`;
@@ -69,23 +87,64 @@ export function renderProperties() {
 
     if (!thumbnail) continue;
 
-    const li = document.createElement('li');
-    li.classList.add('property-item');
+    const li = document.createElement("li");
+    li.classList.add("property-item");
 
-    const img = document.createElement('img');
+    const img = document.createElement("img");
     img.src = thumbnail;
-    img.alt = 'thumbnail';
-    img.classList.add('property-item__thumbnail');
+    img.alt = "thumbnail";
+    img.classList.add("property-item__thumbnail");
 
-    const div = document.createElement('div');
-    div.classList.add('property-item__info');
+    const div = document.createElement("div");
+    div.classList.add("property-item__info");
 
-    const priceElement = document.createElement('p');
-    priceElement.classList.add('property-item__price');
+    const priceElement = document.createElement("p");
+    priceElement.classList.add("property-item__price");
     priceElement.innerHTML = `$ ${price}`;
 
-    const locationElement = document.createElement('p');
-    locationElement.classList.add('property-item__location');
+    const locationElement = document.createElement("p");
+    locationElement.classList.add("property-item__location");
+    locationElement.innerHTML = `${city}, ${line}`;
+
+    li.appendChild(img);
+    li.appendChild(div);
+    div.appendChild(priceElement);
+    div.appendChild(locationElement);
+    li.addEventListener("click", onPropertyClick);
+
+    propertyList.appendChild(li);
+  }
+}
+
+export function renderFavesPage() {
+  while (propertyFaveslist.firstChild) {
+    propertyFaveslist.removeChild(propertyFaveslist.firstChild);
+  }
+
+  for (let property of state.favoriteProperties) {
+    const {
+      address: { city, line },
+      price,
+      thumbnail,
+    } = property;
+
+    const li = document.createElement("li");
+    li.classList.add("property-item");
+
+    const img = document.createElement("img");
+    img.src = thumbnail;
+    img.alt = "thumbnail";
+    img.classList.add("property-item__thumbnail");
+
+    const div = document.createElement("div");
+    div.classList.add("property-item__info");
+
+    const priceElement = document.createElement("p");
+    priceElement.classList.add("property-item__price");
+    priceElement.innerHTML = `$ ${price}`;
+
+    const locationElement = document.createElement("p");
+    locationElement.classList.add("property-item__location");
     locationElement.innerHTML = `${city}, ${line}`;
 
     li.appendChild(img);
@@ -93,6 +152,54 @@ export function renderProperties() {
     div.appendChild(priceElement);
     div.appendChild(locationElement);
 
-    propertyList.appendChild(li);
+    propertyFaveslist.appendChild(li);
   }
+}
+
+export function renderPage(page = "search") {
+  switch (page) {
+    case "search":
+      searchContainer.style.display = "flex";
+      propertyContainer.style.display = "none";
+      propertyPageContainer.style.display = "none";
+      propertyFaveslistContainer.style.display = "none";
+      break;
+    case "propertiesList":
+      searchContainer.style.display = "none";
+      propertyContainer.style.display = "flex";
+      propertyPageContainer.style.display = "none";
+      propertyFaveslistContainer.style.display = "none";
+      break;
+    case "propertyDetails":
+      searchContainer.style.display = "none";
+      propertyContainer.style.display = "none";
+      propertyPageContainer.style.display = "flex";
+      propertyFaveslistContainer.style.display = "none";
+      break;
+    case "faves":
+      searchContainer.style.display = "none";
+      propertyContainer.style.display = "none";
+      propertyPageContainer.style.display = "none";
+      propertyFaveslistContainer.style.display = "flex";
+      break;
+    default:
+      searchContainer.style.display = "flex";
+      propertyContainer.style.display = "none";
+      propertyPageContainer.style.display = "none";
+      propertyFaveslistContainer.style.display = "none";
+      break;
+  }
+}
+
+export function renderPropertyDetails() {
+  propertySummary.innerHTML =
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum blanditiis ducimus necessitatibus iste suntofficia hic sapiente iure eius porro.";
+  propertyFurniture.innerHTML = `${state.currentProperty.beds} ${
+    state.currentProperty.beds <= 1 ? "bed" : "beds"
+  }, ${state.currentProperty.baths} ${
+    state.currentProperty.baths <= 1 ? "bath" : "baths"
+  }`;
+  propertySumbnail.src = state.currentProperty.thumbnail;
+  propertyAddress.innerHTML = `${state.currentProperty.address.line}, ${state.currentProperty.address.city}`;
+  propertyPrice.innerHTML = `${state.currentProperty.price}`;
 }
