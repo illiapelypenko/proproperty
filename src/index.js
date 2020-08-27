@@ -1,18 +1,9 @@
 import './styles/main.scss';
-import { setSpinner } from './components/spinner';
+import Spinner from './components/spinner';
 import { renderSearchList } from './components/view';
 import { getSuggestions } from './components/api';
 import { initEventListeners } from './components/eventListeners';
-
-export const SEARCH_TEXT_INPUT = document.querySelector('.search__input');
-export const SUGGESTION_LIST = document.querySelector('.search__suggestions');
-export const GO_BUTTON = document.querySelector('.search__go-btn');
-export const MY_LOCATION_BUTTON = document.querySelector(
-  '.search__myLocation-btn'
-);
-export const RECENT_SEARCHES_LIST = document.querySelector(
-  '.recent-searches__items'
-);
+import { searchSpinnerContainer, searchSpinnerCanvas } from './components/elements';
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -20,26 +11,31 @@ export const state = {
   recentSearches: [], // {suggestion[] }
   showSuggestions: false,
   currentSearchListItem: {}, // recentSearch
+  properties: [], // property[]
+  propertyOffset: 0,
 };
 
-function setRecentSearchesFromLocalStorage() {
+function setPersistedRecentSearches() {
   const recentSearchesInStorage = localStorage.getItem('recentSearches');
+
   if (recentSearchesInStorage) {
     state.recentSearches = JSON.parse(recentSearchesInStorage);
   }
 }
 
 async function init() {
+  const spinner = new Spinner(searchSpinnerContainer, searchSpinnerCanvas);
+
   try {
-    setSpinner(true);
-    setRecentSearchesFromLocalStorage();
+    spinner.toogleVisibility(true);
+    setPersistedRecentSearches();
     renderSearchList();
     initEventListeners();
     await getSuggestions();
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   } finally {
-    setSpinner(false);
+    spinner.toogleVisibility(false);
   }
 }
 

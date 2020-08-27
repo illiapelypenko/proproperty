@@ -1,47 +1,55 @@
-const SPINNER = document.querySelector('.spinner');
-const CANVAS = document.querySelector('.spinner-canvas');
-const ctx = CANVAS.getContext('2d');
-const rnd = Math.random() * 10;
-let startAngle = 0;
-let drawId = 0;
-const spinnerX = CANVAS.width / 2;
-const spinnerY = CANVAS.height / 2;
-const lineWidth = 50;
+class Spinner {
+  drawId = 0;
+  startAngle = 0;
+  rnd = Math.random() * 10;
 
-export function drawSpinner() {
-  // inner circle
-  ctx.clearRect(0, 0, CANVAS.width, CANVAS.height);
-  ctx.beginPath();
-  ctx.arc(spinnerX, spinnerY, spinnerX - lineWidth, 0, 2 * Math.PI);
-  ctx.lineWidth = lineWidth;
-  ctx.strokeStyle = '#32363e';
-  ctx.stroke();
+  constructor(spinner, canvas) {
+    this.spinner = spinner;
+    this.canvas = canvas;
+    this.ctx = this.canvas.getContext('2d');
+    this.spinnerX = this.canvas.width / 2;
+    this.spinnerY = this.canvas.height / 2;
+  }
 
-  // spinner itself
-  ctx.beginPath();
-  ctx.arc(
-    spinnerX,
-    spinnerY,
-    spinnerX - lineWidth,
-    startAngle + rnd,
-    1 + startAngle + rnd
-  );
-  ctx.lineWidth = lineWidth;
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = '#4aff4a';
-  ctx.stroke();
-  startAngle += 0.1;
-  drawId = requestAnimationFrame(drawSpinner);
-}
+  draw = () => {
+    const lineWidth = 50;
 
-export function setSpinner(show) {
-  if (show) {
-    SPINNER.style.display = 'flex';
-    SPINNER.classList.remove('spinner--hide');
-  } else {
-    SPINNER.classList.add('spinner--hide');
-    SPINNER.style.display = 'none';
+    // inner circle
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.beginPath();
+    this.ctx.arc(this.spinnerX, this.spinnerY, this.spinnerX - lineWidth, 0, 2 * Math.PI);
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.strokeStyle = '#32363e';
+    this.ctx.stroke();
+
+    // spinner itself
+    this.ctx.beginPath();
+    this.ctx.arc(
+      this.spinnerX,
+      this.spinnerY,
+      this.spinnerX - lineWidth,
+      this.startAngle + this.rnd,
+      1 + this.startAngle + this.rnd
+    );
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.lineCap = 'round';
+    this.ctx.strokeStyle = '#9f98ff';
+    this.ctx.stroke();
+    this.startAngle += 0.1;
+    this.drawId = requestAnimationFrame(this.draw);
+  };
+
+  toogleVisibility(show) {
+    if (show) {
+      this.draw();
+      this.spinner.style.display = 'flex';
+      this.spinner.classList.remove('spinner--hide');
+    } else {
+      this.spinner.classList.add('spinner--hide'); // for opacity transition before hiding
+      this.spinner.style.display = 'none';
+      cancelAnimationFrame(this.drawId);
+    }
   }
 }
 
-drawSpinner();
+export default Spinner;
