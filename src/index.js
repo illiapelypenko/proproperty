@@ -3,7 +3,7 @@ import Spinner from './components/spinner';
 import { renderSearchList } from './components/view';
 import { getSuggestions } from './components/api';
 import { initEventListeners } from './components/eventListeners';
-import { searchSpinnerContainer, searchSpinnerCanvas } from './components/domConsts';
+import { searchSpinnerContainer, searchSpinnerCanvas } from './components/elements';
 
 export const state = {
   currentSearchItem: {}, // sugestion

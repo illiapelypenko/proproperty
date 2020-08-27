@@ -5,15 +5,14 @@ import {
   propertyList,
   matchesCount,
   loadMoreButton,
-} from './domConsts';
+} from './elements';
+import { clearChildren } from './utils';
 
 export function renderSuggestions() {
   const suggestionToShow = 4;
   const suggestionHeight = 56;
 
-  while (suggestionList.firstChild) {
-    suggestionList.removeChild(suggestionList.firstChild);
-  }
+  clearChildren(suggestionList);
 
   const { suggestions, showSuggestions } = state;
 
@@ -33,9 +32,7 @@ export function renderSuggestions() {
 }
 
 export function renderSearchList() {
-  while (recentSearchList.firstChild) {
-    recentSearchList.removeChild(recentSearchList.firstChild);
-  }
+  clearChildren(recentSearchList);
 
   const { recentSearches } = state;
 
@@ -61,38 +58,42 @@ export function renderProperties() {
   } matches`;
 
   for (let property of properties) {
-    const {
-      address: { city, line },
-      price,
-      thumbnail,
-    } = property;
-
-    if (!thumbnail) continue;
-
-    const li = document.createElement('li');
-    li.classList.add('property-item');
-
-    const img = document.createElement('img');
-    img.src = thumbnail;
-    img.alt = 'thumbnail';
-    img.classList.add('property-item__thumbnail');
-
-    const div = document.createElement('div');
-    div.classList.add('property-item__info');
-
-    const priceElement = document.createElement('p');
-    priceElement.classList.add('property-item__price');
-    priceElement.innerHTML = `$ ${price}`;
-
-    const locationElement = document.createElement('p');
-    locationElement.classList.add('property-item__location');
-    locationElement.innerHTML = `${city}, ${line}`;
-
-    li.appendChild(img);
-    li.appendChild(div);
-    div.appendChild(priceElement);
-    div.appendChild(locationElement);
-
-    propertyList.appendChild(li);
+    createPropertyItem(property);
   }
+}
+
+function createPropertyItem(property) {
+  const {
+    address: { city, line },
+    price,
+    thumbnail,
+  } = property;
+
+  if (!thumbnail) continue;
+
+  const li = document.createElement('li');
+  li.classList.add('property-item');
+
+  const img = document.createElement('img');
+  img.src = thumbnail;
+  img.alt = 'thumbnail';
+  img.classList.add('property-item__thumbnail');
+
+  const div = document.createElement('div');
+  div.classList.add('property-item__info');
+
+  const priceElement = document.createElement('p');
+  priceElement.classList.add('property-item__price');
+  priceElement.innerHTML = `$ ${price}`;
+
+  const locationElement = document.createElement('p');
+  locationElement.classList.add('property-item__location');
+  locationElement.innerHTML = `${city}, ${line}`;
+
+  li.appendChild(img);
+  li.appendChild(div);
+  div.appendChild(priceElement);
+  div.appendChild(locationElement);
+
+  propertyList.appendChild(li);
 }

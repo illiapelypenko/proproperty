@@ -11,18 +11,19 @@ import {
   backButton,
   propertySpinnerContainer,
   propertySpinnerCanvas,
-} from './domConsts';
+} from './elements';
 import { state } from '../index';
 import { renderSuggestions, renderSearchList, renderProperties } from './view';
 import { getSuggestions, getProperties } from './api';
 import Spinner from './spinner';
+import { getSearchItemInfo, clearChildren } from './utils';
 
 function onSearchFocus() {
   state.showSuggestions = true;
   renderSuggestions();
 }
 
-const onSearchInput = (() => {
+const onSearchInput = () => {
   // 1 sec delay before fetching data
   let timeout;
 
@@ -38,7 +39,7 @@ const onSearchInput = (() => {
       console.log(e);
     }
   };
-})();
+};
 
 function onSearchBlur() {
   suggestionList.style.height = '0px';
@@ -53,14 +54,13 @@ function onSuggestionClick(e) {
   );
 
   state.currentSearchItem = state.suggestions[index];
-  const { area_type, city, state_code } = state.currentSearchItem;
-  searchTextInput.value = `${area_type}, ${city}, ${state_code}`;
+  searchTextInput.value = getSearchItemInfo();
 }
 
 function onMyLocationButtonClick() {
   // get random location from suggestion list
   state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
-  searchTextInput.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
+  searchTextInput.value = getSearchItemInfo();
 }
 
 function onGoButtonClick() {
@@ -93,9 +93,7 @@ async function onRecentSearchClick(e) {
     );
     state.currentSearchListItem = state.recentSearches[index];
 
-    while (propertyList.firstChild) {
-      propertyList.removeChild(propertyList.firstChild);
-    }
+    clearChildren(propertyList);
 
     propertyContainer.style.display = 'flex';
     searchContainer.style.display = 'none';
@@ -123,7 +121,7 @@ function onBackButtonClick() {
 export function initEventListeners() {
   searchTextInput.addEventListener('focus', onSearchFocus, true);
   searchTextInput.addEventListener('blur', onSearchBlur, true);
-  searchTextInput.addEventListener('input', onSearchInput);
+  searchTextInput.addEventListener('input', onSearchInput());
   suggestionList.addEventListener('click', onSuggestionClick);
   myLocationButton.addEventListener('click', onMyLocationButtonClick);
   goButton.addEventListener('click', onGoButtonClick);
