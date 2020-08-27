@@ -12,13 +12,11 @@ export async function getSuggestions(location = 'a') {
 
   try {
     const URL_PARAMS = encodeURI(`?input=${location}`);
-    const fetchMethod = 'GET';
-    const xRapidapiHost = 'realtor.p.rapidapi.com';
+    const X_RAPID_HOST = 'realtor.p.rapidapi.com';
 
-    const res = await fetch(BASE_URL + LOCATIONS_AUTOCOMPLETE_URL + URL_PARAMS, {
-      method: fetchMethod,
+    const res = await fetch(LOCATIONS_AUTOCOMPLETE_URL + URL_PARAMS, {
       headers: {
-        'x-rapidapi-host': xRapidapiHost,
+        'x-rapidapi-host': X_RAPID_HOST,
         'x-rapidapi-key': API_KEY,
       },
     });
@@ -40,16 +38,12 @@ export async function getProperties() {
   }
 
   try {
-    const URL_PARAMS = encodeURI(
-      `?sort=relevance&city=${city}&limit=500&offset=0&state_code=${state_code}`
-    );
-    const fetchMethod = 'GET';
-    const xRapidapiHost = 'realtor.p.rapidapi.com';
+    const URL_PARAMS = encodeURI(`?sort=relevance&city=${city}&limit=500&offset=0&state_code=${state_code}`);
+    const X_RAPID_HOST = 'realtor.p.rapidapi.com';
 
-    const res = await fetch(BASE_URL + PROPERTIES_FOR_SALE_URL + URL_PARAMS, {
-      method: fetchMethod,
+    const res = await fetch(PROPERTIES_FOR_SALE_URL + URL_PARAMS, {
       headers: {
-        'x-rapidapi-host': xRapidapiHost,
+        'x-rapidapi-host': X_RAPID_HOST,
         'x-rapidapi-key': API_KEY,
       },
     });

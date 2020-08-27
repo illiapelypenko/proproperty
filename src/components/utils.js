@@ -10,5 +10,5 @@ export function clearChildren(parent) {
 }
 
 export function getNodeElementIndexFromNodeList(nodeElement, nodeList) {
-  return Array.from(nodeList.children).findIndex(item => item.outerText === nodeElement.innerText);
+  return Array.from(nodeList.children).findIndex(item => item.innerText === nodeElement.innerText);
 }

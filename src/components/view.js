@@ -44,7 +44,9 @@ export function renderProperties() {
   loadMoreButton.style.display = state.properties.length - state.propertyOffset > 20 ? 'block' : 'none';
 
   const toRender = 20;
-  let properties = state.properties.slice(state.propertyOffset, state.propertyOffset + toRender);
+  let properties = state.properties
+    .slice(state.propertyOffset, state.propertyOffset + toRender)
+    .filter(prop => prop.thumbnail);
   matchesCount.innerHTML = `${state.propertyOffset + properties.length} of ${state.properties.length} matches`;
 
   for (let property of properties) {
@@ -58,8 +60,6 @@ function createPropertyItem(property) {
     price,
     thumbnail,
   } = property;
-
-  if (!thumbnail) continue;
 
   const li = document.createElement('li');
   li.classList.add('property-item');
