@@ -16,8 +16,8 @@ import {
   addPropertyToFavsButton,
   favesButton,
   propertyFaveslistBackButton,
-} from "./domConsts";
-import { state } from "../index";
+} from './domConsts';
+import { state } from '../index';
 import {
   renderSuggestions,
   renderSearchList,
@@ -25,9 +25,9 @@ import {
   renderPropertyDetails,
   renderPage,
   renderFavesPage,
-} from "./view";
-import { getSuggestions, getProperties } from "./api";
-import Spinner from "./spinner";
+} from './view';
+import { getSuggestions, getProperties } from './api';
+import Spinner from './spinner';
 
 function onSearchFocus() {
   state.showSuggestions = true;
@@ -38,7 +38,7 @@ const onSearchInput = (() => {
   // 1 sec delay before fetching data
   let timeout;
 
-  return (e) => {
+  return e => {
     try {
       const suggest = async () => {
         await getSuggestions(e.target.value);
@@ -53,15 +53,15 @@ const onSearchInput = (() => {
 })();
 
 function onSearchBlur() {
-  suggestionList.style.height = "0px";
+  suggestionList.style.height = '0px';
   state.showSuggestions = false;
 }
 
 function onSuggestionClick(e) {
-  if (e.target.nodeName !== "LI") return;
+  if (e.target.nodeName !== 'LI') return;
 
   const index = Array.from(suggestionList.children).findIndex(
-    (item) => item.outerText === e.target.innerText
+    item => item.outerText === e.target.innerText
   );
 
   state.currentSearchItem = state.suggestions[index];
@@ -71,8 +71,7 @@ function onSuggestionClick(e) {
 
 function onMyLocationButtonClick() {
   // get random location from suggestion list
-  state.currentSearchItem =
-    state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
+  state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
   searchTextInput.value = `${state.currentSearchItem.area_type}, ${state.currentSearchItem.city}, ${state.currentSearchItem.state_code}`;
 }
 
@@ -88,8 +87,8 @@ function onGoButtonClick() {
     state.recentSearches.pop();
   }
 
-  localStorage.setItem("recentSearches", JSON.stringify(state.recentSearches));
-  searchTextInput.value = "";
+  localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
+  searchTextInput.value = '';
   renderSearchList();
   state.currentSearchItem = {};
 }
@@ -98,11 +97,11 @@ async function onRecentSearchClick(e) {
   const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
 
   try {
-    if (e.target.nodeName !== "SPAN") return;
+    if (e.target.nodeName !== 'SPAN') return;
 
     state.propertyOffset = 0;
     const index = Array.from(recentSearchList.children).findIndex(
-      (item) => item.outerText === e.target.innerText
+      item => item.outerText === e.target.innerText
     );
     state.currentSearchListItem = state.recentSearches[index];
 
@@ -110,7 +109,7 @@ async function onRecentSearchClick(e) {
       propertyList.removeChild(propertyList.firstChild);
     }
 
-    renderPage("propertiesList");
+    renderPage('propertiesList');
 
     spinner.toogleVisibility(true);
     await getProperties();
@@ -128,57 +127,49 @@ function onLoadMoreButtonClick() {
 }
 
 function onPropertyListBackButtonClick() {
-  renderPage("search");
+  renderPage('search');
 }
 
 function onPropertyDetailsBackButton() {
-  renderPage("propertiesList");
+  renderPage('propertiesList');
 }
 
 export function onPropertyClick(e) {
   const index = Array.from(propertyList.children).findIndex(
-    (property) => property === e.currentTarget
+    property => property === e.currentTarget
   );
   state.currentProperty = state.properties[index];
   renderPropertyDetails();
-  renderPage("propertyDetails");
+  renderPage('propertyDetails');
 }
 
 export function onAddPropertyToFavsButton(e) {
+  addPropertyToFavsButton.style.visibility = 'hidden';
   state.favoriteProperties.push(state.currentProperty);
-  console.log(state.favoriteProperties);
+  localStorage.setItem('favoriteProperties', JSON.stringify(state.favoriteProperties));
 }
 
 export function onFavesButton(e) {
   renderFavesPage();
-  renderPage("faves");
+  renderPage('faves');
 }
 
 export function onPropertyFaveslistBackButton(e) {
-  renderPage("search");
+  renderPage('search');
 }
 
 export function initEventListeners() {
-  searchTextInput.addEventListener("focus", onSearchFocus, true);
-  searchTextInput.addEventListener("blur", onSearchBlur, true);
-  searchTextInput.addEventListener("input", onSearchInput);
-  suggestionList.addEventListener("click", onSuggestionClick);
-  myLocationButton.addEventListener("click", onMyLocationButtonClick);
-  goButton.addEventListener("click", onGoButtonClick);
-  recentSearchList.addEventListener("click", onRecentSearchClick);
-  loadMoreButton.addEventListener("click", onLoadMoreButtonClick);
-  propertyListBackButton.addEventListener(
-    "click",
-    onPropertyListBackButtonClick
-  );
-  propertyDetailsBackButton.addEventListener(
-    "click",
-    onPropertyDetailsBackButton
-  );
-  addPropertyToFavsButton.addEventListener("click", onAddPropertyToFavsButton);
-  favesButton.addEventListener("click", onFavesButton);
-  propertyFaveslistBackButton.addEventListener(
-    "click",
-    onPropertyFaveslistBackButton
-  );
+  searchTextInput.addEventListener('focus', onSearchFocus, true);
+  searchTextInput.addEventListener('blur', onSearchBlur, true);
+  searchTextInput.addEventListener('input', onSearchInput);
+  suggestionList.addEventListener('click', onSuggestionClick);
+  myLocationButton.addEventListener('click', onMyLocationButtonClick);
+  goButton.addEventListener('click', onGoButtonClick);
+  recentSearchList.addEventListener('click', onRecentSearchClick);
+  loadMoreButton.addEventListener('click', onLoadMoreButtonClick);
+  propertyListBackButton.addEventListener('click', onPropertyListBackButtonClick);
+  propertyDetailsBackButton.addEventListener('click', onPropertyDetailsBackButton);
+  addPropertyToFavsButton.addEventListener('click', onAddPropertyToFavsButton);
+  favesButton.addEventListener('click', onFavesButton);
+  propertyFaveslistBackButton.addEventListener('click', onPropertyFaveslistBackButton);
 }
