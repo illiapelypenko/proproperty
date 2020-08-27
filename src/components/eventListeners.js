@@ -16,7 +16,7 @@ import { state } from '../index';
 import { renderSuggestions, renderSearchList, renderProperties } from './view';
 import { getSuggestions, getProperties } from './api';
 import Spinner from './spinner';
-import { getSearchItemInfo, clearChildren } from './utils';
+import { getSearchItemInfo, clearChildren, getNodeElementIndexFromNodeList } from './utils';
 
 function onSearchFocus() {
   state.showSuggestions = true;
@@ -49,18 +49,15 @@ function onSearchBlur() {
 function onSuggestionClick(e) {
   if (e.target.nodeName !== 'LI') return;
 
-  const index = Array.from(suggestionList.children).findIndex(
-    item => item.outerText === e.target.innerText
-  );
-
+  const index = getNodeElementIndexFromNodeList(e.target, suggestionList);
   state.currentSearchItem = state.suggestions[index];
-  searchTextInput.value = getSearchItemInfo();
+  searchTextInput.value = getSearchItemInfo(state);
 }
 
 function onMyLocationButtonClick() {
   // get random location from suggestion list
   state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
-  searchTextInput.value = getSearchItemInfo();
+  searchTextInput.value = getSearchItemInfo(state);
 }
 
 function onGoButtonClick() {
@@ -88,9 +85,9 @@ async function onRecentSearchClick(e) {
     if (e.target.nodeName !== 'SPAN') return;
 
     state.propertyOffset = 0;
-    const index = Array.from(recentSearchList.children).findIndex(
-      item => item.outerText === e.target.innerText
-    );
+
+    const index = getNodeElementIndexFromNodeList(e.target, recentSearchList);
+
     state.currentSearchListItem = state.recentSearches[index];
 
     clearChildren(propertyList);

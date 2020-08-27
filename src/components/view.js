@@ -1,11 +1,5 @@
 import { state } from '../index';
-import {
-  suggestionList,
-  recentSearchList,
-  propertyList,
-  matchesCount,
-  loadMoreButton,
-} from './elements';
+import { suggestionList, recentSearchList, propertyList, matchesCount, loadMoreButton } from './elements';
 import { clearChildren } from './utils';
 
 export function renderSuggestions() {
@@ -26,8 +20,7 @@ export function renderSuggestions() {
   }
 
   if (showSuggestions) {
-    suggestionList.style.height =
-      suggestions.slice(0, suggestionToShow).length * suggestionHeight + 'px';
+    suggestionList.style.height = suggestions.slice(0, suggestionToShow).length * suggestionHeight + 'px';
   }
 }
 
@@ -48,14 +41,11 @@ export function renderSearchList() {
 }
 
 export function renderProperties() {
-  if (state.properties.length - state.propertyOffset > 20) loadMoreButton.style.display = 'block';
-  else loadMoreButton.style.display = 'none';
+  loadMoreButton.style.display = state.properties.length - state.propertyOffset > 20 ? 'block' : 'none';
 
   const toRender = 20;
   let properties = state.properties.slice(state.propertyOffset, state.propertyOffset + toRender);
-  matchesCount.innerHTML = `${state.propertyOffset + properties.length} of ${
-    state.properties.length
-  } matches`;
+  matchesCount.innerHTML = `${state.propertyOffset + properties.length} of ${state.properties.length} matches`;
 
   for (let property of properties) {
     createPropertyItem(property);
