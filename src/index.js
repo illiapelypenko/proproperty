@@ -1,6 +1,6 @@
 import './styles/main.scss';
 import Spinner from './components/spinner';
-import { renderSearchList } from './components/view';
+import { renderSearchList, renderError } from './components/view';
 import { getSuggestions } from './components/api';
 import { initEventListeners } from './components/eventListeners';
 import { searchSpinnerContainer, searchSpinnerCanvas } from './components/elements';
@@ -17,7 +17,7 @@ export const state = {
   favoriteProperties: [],
 };
 
-function setPersistedData() {
+function getPersistedData() {
   const recentSearchesInStorage = localStorage.getItem('recentSearches');
   if (recentSearchesInStorage) {
     state.recentSearches = JSON.parse(recentSearchesInStorage);
@@ -34,7 +34,7 @@ async function init() {
 
   try {
     spinner.toogleVisibility(true);
-    setPersistedData();
+    getPersistedData();
     renderSearchList();
     initEventListeners();
     await getSuggestions();

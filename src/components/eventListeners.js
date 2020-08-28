@@ -17,6 +17,8 @@ import {
   favesButton,
   propertyFaveslistBackButton,
   matchesCount,
+  errMsgCloseBtn,
+  errMsgContainer,
 } from './elements';
 import { state } from '../index';
 import {
@@ -27,6 +29,7 @@ import {
   renderPage,
   renderFavesPage,
   createPropertyItem,
+  renderError,
 } from './view';
 import { getSuggestions, getProperties } from './api';
 import Spinner from './spinner';
@@ -104,12 +107,23 @@ async function onRecentSearchClick(e) {
 
     state.currentSearchListItem = state.recentSearches[index];
 
-    clearChildren(propertyList);
-
-    renderPage('propertiesList');
-
     spinner.toogleVisibility(true);
+
+    clearChildren(propertyList);
+    renderPage('propertiesList');
     await getProperties();
+
+    state.recentSearches.unshift(state.recentSearches.splice(index, 1)[0]);
+    renderSearchList();
+    localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
+
+    if (state.properties.length === 0) {
+      renderPage('search');
+      spinner.toogleVisibility(false);
+      renderError('No properties found in this area');
+      return;
+    }
+
     renderProperties();
     matchesCount.style.display = 'block';
   } catch (err) {
@@ -162,6 +176,10 @@ export function onPropertyFaveslistBackButton(e) {
   renderPage('search');
 }
 
+export function onErrMsgCloseBtnClick(e) {
+  errMsgContainer.style.display = 'none';
+}
+
 export function initEventListeners() {
   searchTextInput.addEventListener('focus', onSearchFocus, true);
   searchTextInput.addEventListener('blur', onSearchBlur, true);
@@ -175,5 +193,5 @@ export function initEventListeners() {
   propertyDetailsBackButton.addEventListener('click', onPropertyDetailsBackButton);
   addPropertyToFavsButton.addEventListener('click', onAddPropertyToFavsButton);
   favesButton.addEventListener('click', onFavesButton);
-  // propertyFaveslistBackButton.addEventListener('click', onPropertyFaveslistBackButton);
+  errMsgCloseBtn.addEventListener('click', onErrMsgCloseBtnClick);
 }

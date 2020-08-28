@@ -1,4 +1,5 @@
 import { state } from '../index';
+import { renderError } from './view';
 
 const BASE_URL = 'https://realtor.p.rapidapi.com';
 const LOCATIONS_AUTOCOMPLETE_URL = BASE_URL + '/locations/auto-complete';
@@ -13,7 +14,7 @@ export async function getSuggestions(location = 'a') {
 
   try {
     const urlParams = encodeURI(`?input=${location}`);
-
+    const index = setTimeout(() => renderError('server timeout'), 10000);
     const res = await fetch(LOCATIONS_AUTOCOMPLETE_URL + urlParams, {
       headers: {
         'x-rapidapi-host': X_RAPID_HOST,
@@ -22,10 +23,11 @@ export async function getSuggestions(location = 'a') {
     });
 
     const data = await res.json();
-
+    clearTimeout(index);
     state.suggestions = data.autocomplete;
   } catch (e) {
     console.log(e);
+    renderError();
   }
 }
 
@@ -52,5 +54,6 @@ export async function getProperties() {
     state.properties = data.properties;
   } catch (e) {
     console.log(e);
+    renderError();
   }
 }

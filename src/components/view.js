@@ -17,6 +17,8 @@ import {
   propertyFaveslist,
   addPropertyToFavsButton,
   onFavsPropertyClick,
+  errMsgContainer,
+  errMsgText,
 } from './elements';
 import { clearChildren } from './utils';
 
@@ -109,15 +111,6 @@ export function createPropertyItem(property, isFav) {
   propertyList.appendChild(li);
 }
 
-// export function renderFavesPage() {
-//   clearChildren(propertyFaveslist);
-
-//   for (let property of state.favoriteProperties) {
-//     const li = createPropertyItem(property);
-//     propertyFaveslist.appendChild(li);
-//   }
-// }
-
 export function renderPage(page = 'search') {
   switch (page) {
     case 'search':
@@ -166,4 +159,9 @@ export function renderPropertyDetails() {
   propertySumbnail.src = state.currentProperty.thumbnail;
   propertyAddress.innerHTML = `${state.currentProperty.address.line}, ${state.currentProperty.address.city}`;
   propertyPrice.innerHTML = `${state.currentProperty.price}`;
+}
+
+export function renderError(err) {
+  errMsgContainer.style.display = 'flex';
+  errMsgText.innerHTML = err ? err : 'Network connection issues';
 }
