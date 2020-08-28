@@ -16,8 +16,9 @@ import {
   addPropertyToFavsButton,
   favesButton,
   propertyFaveslistBackButton,
-} from "./elements";
-import { state } from "../index";
+  matchesCount,
+} from './elements';
+import { state } from '../index';
 import {
   renderSuggestions,
   renderSearchList,
@@ -25,14 +26,11 @@ import {
   renderPropertyDetails,
   renderPage,
   renderFavesPage,
-} from "./view";
-import { getSuggestions, getProperties } from "./api";
-import Spinner from "./spinner";
-import {
-  getSearchItemInfo,
-  clearChildren,
-  getNodeElementIndexFromNodeList,
-} from "./utils";
+  createPropertyItem,
+} from './view';
+import { getSuggestions, getProperties } from './api';
+import Spinner from './spinner';
+import { getSearchItemInfo, clearChildren, getNodeElementIndexFromNodeList } from './utils';
 
 function onSearchFocus() {
   state.showSuggestions = true;
@@ -43,7 +41,7 @@ const onSearchInput = () => {
   // 1 sec delay before fetching data
   let timeout;
 
-  return (e) => {
+  return e => {
     try {
       const suggest = async () => {
         await getSuggestions(e.target.value);
@@ -58,12 +56,12 @@ const onSearchInput = () => {
 };
 
 function onSearchBlur() {
-  suggestionList.style.height = "0px";
+  suggestionList.style.height = '0px';
   state.showSuggestions = false;
 }
 
 function onSuggestionClick(e) {
-  if (e.target.nodeName !== "LI") return;
+  if (e.target.nodeName !== 'LI') return;
 
   const index = getNodeElementIndexFromNodeList(e.target, suggestionList);
   state.currentSearchItem = state.suggestions[index];
@@ -72,8 +70,7 @@ function onSuggestionClick(e) {
 
 function onMyLocationButtonClick() {
   // get random location from suggestion list
-  state.currentSearchItem =
-    state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
+  state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
   searchTextInput.value = getSearchItemInfo(state);
 }
 
@@ -89,8 +86,8 @@ function onGoButtonClick() {
     state.recentSearches.pop();
   }
 
-  localStorage.setItem("recentSearches", JSON.stringify(state.recentSearches));
-  searchTextInput.value = "";
+  localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
+  searchTextInput.value = '';
   renderSearchList();
   state.currentSearchItem = {};
 }
@@ -99,7 +96,7 @@ async function onRecentSearchClick(e) {
   const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
 
   try {
-    if (e.target.nodeName !== "SPAN") return;
+    if (e.target.nodeName !== 'SPAN') return;
 
     state.propertyOffset = 0;
 
@@ -109,16 +106,30 @@ async function onRecentSearchClick(e) {
 
     clearChildren(propertyList);
 
-    renderPage("propertiesList");
+    renderPage('propertiesList');
 
     spinner.toogleVisibility(true);
     await getProperties();
     renderProperties();
+    matchesCount.style.display = 'block';
   } catch (err) {
     console.log(err);
   } finally {
     spinner.toogleVisibility(false);
   }
+}
+
+export function onFavesButton(e) {
+  // renderFavesPage();
+  // renderPage('faves');
+  clearChildren(propertyList);
+  renderPage('propertiesList');
+
+  for (let property of state.favoriteProperties) {
+    createPropertyItem(property, true);
+  }
+  matchesCount.style.display = 'none';
+  loadMoreButton.style.display = 'none';
 }
 
 function onLoadMoreButtonClick() {
@@ -127,61 +138,42 @@ function onLoadMoreButtonClick() {
 }
 
 function onPropertyListBackButtonClick() {
-  renderPage("search");
+  renderPage('search');
 }
 
 function onPropertyDetailsBackButton() {
-  renderPage("propertiesList");
+  renderPage('propertiesList');
 }
 
-export function onPropertyClick(e) {
-  const index = Array.from(propertyList.children).findIndex(
-    (property) => property === e.currentTarget
-  );
-  state.currentProperty = state.properties[index];
+export function onPropertyClick(e, isFav) {
+  const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
+  state.currentProperty = isFav ? state.favoriteProperties[index] : state.properties[index];
   renderPropertyDetails();
-  renderPage("propertyDetails");
+  renderPage('propertyDetails');
 }
 
 export function onAddPropertyToFavsButton(e) {
-  addPropertyToFavsButton.style.visibility = "hidden";
+  addPropertyToFavsButton.style.visibility = 'hidden';
   state.favoriteProperties.push(state.currentProperty);
-  localStorage.setItem(
-    "favoriteProperties",
-    JSON.stringify(state.favoriteProperties)
-  );
-}
-
-export function onFavesButton(e) {
-  renderFavesPage();
-  renderPage("faves");
+  localStorage.setItem('favoriteProperties', JSON.stringify(state.favoriteProperties));
 }
 
 export function onPropertyFaveslistBackButton(e) {
-  renderPage("search");
+  renderPage('search');
 }
 
 export function initEventListeners() {
-  searchTextInput.addEventListener("focus", onSearchFocus, true);
-  searchTextInput.addEventListener("blur", onSearchBlur, true);
-  searchTextInput.addEventListener("input", onSearchInput());
-  suggestionList.addEventListener("click", onSuggestionClick);
-  myLocationButton.addEventListener("click", onMyLocationButtonClick);
-  goButton.addEventListener("click", onGoButtonClick);
-  recentSearchList.addEventListener("click", onRecentSearchClick);
-  loadMoreButton.addEventListener("click", onLoadMoreButtonClick);
-  propertyListBackButton.addEventListener(
-    "click",
-    onPropertyListBackButtonClick
-  );
-  propertyDetailsBackButton.addEventListener(
-    "click",
-    onPropertyDetailsBackButton
-  );
-  addPropertyToFavsButton.addEventListener("click", onAddPropertyToFavsButton);
-  favesButton.addEventListener("click", onFavesButton);
-  propertyFaveslistBackButton.addEventListener(
-    "click",
-    onPropertyFaveslistBackButton
-  );
+  searchTextInput.addEventListener('focus', onSearchFocus, true);
+  searchTextInput.addEventListener('blur', onSearchBlur, true);
+  searchTextInput.addEventListener('input', onSearchInput());
+  suggestionList.addEventListener('click', onSuggestionClick);
+  myLocationButton.addEventListener('click', onMyLocationButtonClick);
+  goButton.addEventListener('click', onGoButtonClick);
+  recentSearchList.addEventListener('click', onRecentSearchClick);
+  loadMoreButton.addEventListener('click', onLoadMoreButtonClick);
+  propertyListBackButton.addEventListener('click', onPropertyListBackButtonClick);
+  propertyDetailsBackButton.addEventListener('click', onPropertyDetailsBackButton);
+  addPropertyToFavsButton.addEventListener('click', onAddPropertyToFavsButton);
+  favesButton.addEventListener('click', onFavesButton);
+  // propertyFaveslistBackButton.addEventListener('click', onPropertyFaveslistBackButton);
 }
