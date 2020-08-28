@@ -41,7 +41,7 @@ export async function getProperties() {
 
   try {
     const urlParams = encodeURI(`?sort=relevance&city=${city}&limit=500&offset=0&state_code=${state_code}`);
-
+    const index = setTimeout(() => renderError('server timeout'), 10000);
     const res = await fetch(PROPERTIES_FOR_SALE_URL + urlParams, {
       headers: {
         'x-rapidapi-host': X_RAPID_HOST,
@@ -51,6 +51,7 @@ export async function getProperties() {
 
     const data = await res.json();
     propertiesBuffer.set(mapKey, data.properties);
+    clearTimeout(index);
     state.properties = data.properties;
   } catch (e) {
     console.log(e);

@@ -6,16 +6,12 @@ import {
   goButton,
   loadMoreButton,
   propertyList,
-  searchContainer,
-  propertyContainer,
   propertyListBackButton,
   propertySpinnerContainer,
   propertySpinnerCanvas,
-  propertyItem,
   propertyDetailsBackButton,
   addPropertyToFavsButton,
   favesButton,
-  propertyFaveslistBackButton,
   matchesCount,
   errMsgCloseBtn,
   errMsgContainer,
@@ -27,7 +23,6 @@ import {
   renderProperties,
   renderPropertyDetails,
   renderPage,
-  renderFavesPage,
   createPropertyItem,
   renderError,
 } from './view';
@@ -111,6 +106,7 @@ async function onRecentSearchClick(e) {
 
     clearChildren(propertyList);
     renderPage('propertiesList');
+
     await getProperties();
 
     state.recentSearches.unshift(state.recentSearches.splice(index, 1)[0]);
@@ -134,8 +130,6 @@ async function onRecentSearchClick(e) {
 }
 
 export function onFavesButton(e) {
-  // renderFavesPage();
-  // renderPage('faves');
   clearChildren(propertyList);
   renderPage('propertiesList');
 

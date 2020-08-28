@@ -117,39 +117,34 @@ export function renderPage(page = 'search') {
       searchContainer.style.display = 'flex';
       propertyContainer.style.display = 'none';
       propertyPageContainer.style.display = 'none';
-      // propertyFaveslistContainer.style.display = 'none';
       break;
     case 'propertiesList':
       searchContainer.style.display = 'none';
       propertyContainer.style.display = 'flex';
       propertyPageContainer.style.display = 'none';
-      // propertyFaveslistContainer.style.display = 'none';
       break;
     case 'propertyDetails':
       searchContainer.style.display = 'none';
       propertyContainer.style.display = 'none';
       propertyPageContainer.style.display = 'flex';
-      // propertyFaveslistContainer.style.display = 'none';
       break;
     case 'faves':
       searchContainer.style.display = 'none';
       propertyContainer.style.display = 'none';
       propertyPageContainer.style.display = 'none';
-      // propertyFaveslistContainer.style.display = 'flex';
       break;
     default:
       searchContainer.style.display = 'flex';
       propertyContainer.style.display = 'none';
       propertyPageContainer.style.display = 'none';
-      // propertyFaveslistContainer.style.display = 'none';
       break;
   }
 }
 
 export function renderPropertyDetails() {
-  if (state.favoriteProperties.find(prop => state.currentProperty.property_id === prop.property_id))
-    addPropertyToFavsButton.style.visibility = 'hidden';
-  else addPropertyToFavsButton.style.visibility = 'visible';
+  state.favoriteProperties.find(prop => state.currentProperty.property_id === prop.property_id)
+    ? (addPropertyToFavsButton.style.visibility = 'hidden')
+    : (addPropertyToFavsButton.style.visibility = 'visible');
 
   propertySummary.innerHTML =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum blanditiis ducimus necessitatibus iste suntofficia hic sapiente iure eius porro.';
