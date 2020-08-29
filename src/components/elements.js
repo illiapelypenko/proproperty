@@ -26,7 +26,9 @@ const FAVES_BTN = '.faves-btn';
 const ERROR_MSG_CONTAINER = '.error-msg-container';
 const ERROR_MSG_CLOSE_BTN = '.error-msg__close-icon path';
 const ERROR_MSG_TEXT = '.error-msg__text';
+const EMPTY_FAV_LIST_MSG = '.empty-fav-list-msg';
 
+export const emptyFavListMsg = document.querySelector(EMPTY_FAV_LIST_MSG);
 export const errMsgText = document.querySelector(ERROR_MSG_TEXT);
 export const errMsgCloseBtn = document.querySelector(ERROR_MSG_CLOSE_BTN);
 export const errMsgContainer = document.querySelector(ERROR_MSG_CONTAINER);

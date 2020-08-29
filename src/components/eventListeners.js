@@ -15,6 +15,7 @@ import {
   matchesCount,
   errMsgCloseBtn,
   errMsgContainer,
+  emptyFavListMsg,
 } from './elements';
 import { state } from '../index';
 import {
@@ -72,7 +73,7 @@ function onMyLocationButtonClick() {
   searchTextInput.value = getSearchItemInfo(state);
 }
 
-function onGoButtonClick() {
+async function onGoButtonClick() {
   if (!state.currentSearchItem.city) {
     searchTextInput.focus();
     return;
@@ -87,6 +88,22 @@ function onGoButtonClick() {
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
   searchTextInput.value = '';
   renderSearchList();
+  const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
+  state.currentSearchListItem = state.currentSearchItem;
+  state.propertyOffset = 0;
+  spinner.toogleVisibility(true);
+  clearChildren(propertyList);
+  renderPage('propertiesList');
+  await getProperties();
+  if (state.properties.length === 0) {
+    renderPage('search');
+    spinner.toogleVisibility(false);
+    renderError('No properties found in this area');
+    return;
+  }
+  renderProperties();
+  spinner.toogleVisibility(false);
+  matchesCount.style.display = 'block';
   state.currentSearchItem = {};
 }
 
@@ -138,6 +155,9 @@ export function onFavesButton(e) {
   }
   matchesCount.style.display = 'none';
   loadMoreButton.style.display = 'none';
+  state.favoriteProperties.length === 0
+    ? (emptyFavListMsg.style.display = 'block')
+    : (emptyFavListMsg.style.display = 'none');
 }
 
 function onLoadMoreButtonClick() {
