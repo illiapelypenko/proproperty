@@ -78,16 +78,13 @@ async function onGoButtonClick() {
     searchTextInput.focus();
     return;
   }
+  searchTextInput.value = '';
 
   state.recentSearches.unshift(state.currentSearchItem);
-
   while (state.recentSearches.length > 5) {
     state.recentSearches.pop();
   }
 
-  localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
-  searchTextInput.value = '';
-  renderSearchList();
   const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
   state.currentSearchListItem = state.currentSearchItem;
   state.propertyOffset = 0;
@@ -95,6 +92,9 @@ async function onGoButtonClick() {
   clearChildren(propertyList);
   renderPage('propertiesList');
   await getProperties();
+  state.recentSearches[0].propsCount = state.properties.length;
+  localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
+  renderSearchList();
   if (state.properties.length === 0) {
     renderPage('search');
     spinner.toogleVisibility(false);

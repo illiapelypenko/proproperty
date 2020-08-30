@@ -58,7 +58,7 @@ export function renderSearchList() {
     li.classList.add('recent-searches__item');
     const span = document.createElement('span');
     li.appendChild(span);
-    span.innerHTML = `Search #${recentSearches.indexOf(search) + 1} ${area_type}, ${city}`;
+    span.innerHTML = `Search #${recentSearches.indexOf(search) + 1} ${area_type}, ${city} (${search.propsCount})`;
     recentSearchList.appendChild(li);
   }
 }
