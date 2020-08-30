@@ -146,7 +146,9 @@ export function renderPropertyDetails() {
   state.favoriteProperties.find(prop => state.currentProperty.property_id === prop.property_id)
     ? (addPropertyToFavsButton.style.visibility = 'hidden')
     : (addPropertyToFavsButton.style.visibility = 'visible');
+
   emptyFavListMsg.style.display = 'none';
+
   propertySummary.innerHTML =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum blanditiis ducimus necessitatibus iste suntofficia hic sapiente iure eius porro.';
   propertyFurniture.innerHTML = `${state.currentProperty.beds} ${state.currentProperty.beds <= 1 ? 'bed' : 'beds'}, ${

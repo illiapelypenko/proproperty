@@ -79,15 +79,13 @@ async function onGoButtonClick() {
     return;
   }
   searchTextInput.value = '';
-
   state.recentSearches.unshift(state.currentSearchItem);
   while (state.recentSearches.length > 5) {
     state.recentSearches.pop();
   }
-
-  const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
   state.currentSearchListItem = state.currentSearchItem;
   state.propertyOffset = 0;
+  const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
   spinner.toogleVisibility(true);
   clearChildren(propertyList);
   renderPage('propertiesList');
@@ -95,12 +93,7 @@ async function onGoButtonClick() {
   state.recentSearches[0].propsCount = state.properties.length;
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
   renderSearchList();
-  if (state.properties.length === 0) {
-    renderPage('search');
-    spinner.toogleVisibility(false);
-    renderError('No properties found in this area');
-    return;
-  }
+  displayZeroPropertiesFoundError(spinner);
   renderProperties();
   spinner.toogleVisibility(false);
   matchesCount.style.display = 'block';
@@ -114,29 +107,16 @@ async function onRecentSearchClick(e) {
     if (e.target.nodeName !== 'SPAN') return;
 
     state.propertyOffset = 0;
-
     const index = getNodeElementIndexFromNodeList(e.target, recentSearchList);
-
     state.currentSearchListItem = state.recentSearches[index];
-
     spinner.toogleVisibility(true);
-
     clearChildren(propertyList);
     renderPage('propertiesList');
-
     await getProperties();
-
     state.recentSearches.unshift(state.recentSearches.splice(index, 1)[0]);
     renderSearchList();
     localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
-
-    if (state.properties.length === 0) {
-      renderPage('search');
-      spinner.toogleVisibility(false);
-      renderError('No properties found in this area');
-      return;
-    }
-
+    displayZeroPropertiesFoundError(spinner);
     renderProperties();
     matchesCount.style.display = 'block';
   } catch (err) {
