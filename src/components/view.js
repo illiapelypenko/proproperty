@@ -10,7 +10,7 @@ import {
   propertyContainer,
   propertySummary,
   propertyFurniture,
-  propertySumbnail,
+  propertyThumbnail,
   propertyAddress,
   propertyPrice,
   propertyFaveslistContainer,
@@ -77,7 +77,7 @@ export function renderProperties() {
   }
 }
 
-export function createPropertyItem(property, isFav) {
+export function createPropertyItem(property, isFavorite) {
   const {
     address: { city, line },
     price,
@@ -107,7 +107,7 @@ export function createPropertyItem(property, isFav) {
   li.appendChild(div);
   div.appendChild(priceElement);
   div.appendChild(locationElement);
-  li.addEventListener('click', e => onPropertyClick(e, isFav));
+  li.addEventListener('click', e => onPropertyClick(e, isFavorite));
 
   propertyList.appendChild(li);
 }
@@ -143,20 +143,23 @@ export function renderPage(page = 'search') {
 }
 
 export function renderPropertyDetails() {
-  state.favoriteProperties.find(prop => state.currentProperty.property_id === prop.property_id)
-    ? (addPropertyToFavsButton.style.visibility = 'hidden')
-    : (addPropertyToFavsButton.style.visibility = 'visible');
+  addPropertyToFavsButton.style.visibility = state.favoriteProperties.find(
+    prop => state.currentProperty.property_id === prop.property_id
+  )
+    ? 'hidden'
+    : 'visible';
 
   emptyFavListMsg.style.display = 'none';
 
+  const bath = state.currentProperty.baths <= 1 ? 'bath' : 'baths';
+  const bed = state.currentProperty.beds <= 1 ? 'bed' : 'beds';
+
   propertySummary.innerHTML =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum blanditiis ducimus necessitatibus iste suntofficia hic sapiente iure eius porro.';
-  propertyFurniture.innerHTML = `${state.currentProperty.beds} ${state.currentProperty.beds <= 1 ? 'bed' : 'beds'}, ${
-    state.currentProperty.baths
-  } ${state.currentProperty.baths <= 1 ? 'bath' : 'baths'}`;
-  propertySumbnail.src = state.currentProperty.thumbnail;
+  propertyFurniture.innerHTML = `${state.currentProperty.beds} ${bed}, ${state.currentProperty.baths} ${bath}`;
+  propertyThumbnail.src = state.currentProperty.thumbnail;
   propertyAddress.innerHTML = `${state.currentProperty.address.line}, ${state.currentProperty.address.city}`;
-  propertyPrice.innerHTML = `${state.currentProperty.price}`;
+  propertyPrice.innerHTML = state.currentProperty.price;
 }
 
 export function renderError(err) {

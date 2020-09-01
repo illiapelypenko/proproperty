@@ -14,10 +14,8 @@ export function getNodeElementIndexFromNodeList(nodeElement, nodeList) {
 }
 
 export function displayZeroPropertiesFoundError(spinner) {
-  if (!state.properties.length) {
-    renderPage('search');
-    spinner.toogleVisibility(false);
-    renderError('No properties found in this area');
-    return;
-  }
+  renderPage('search');
+  spinner.toogleVisibility(false);
+  renderError('No properties found in this area');
+  return;
 }

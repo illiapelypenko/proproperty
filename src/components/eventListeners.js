@@ -93,7 +93,7 @@ async function onGoButtonClick() {
   state.recentSearches[0].propsCount = state.properties.length;
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
   renderSearchList();
-  displayZeroPropertiesFoundError(spinner);
+  if (!state.properties.length) displayZeroPropertiesFoundError(spinner);
   renderProperties();
   spinner.toogleVisibility(false);
   matchesCount.style.display = 'block';
@@ -113,10 +113,11 @@ async function onRecentSearchClick(e) {
     clearChildren(propertyList);
     renderPage('propertiesList');
     await getProperties();
-    state.recentSearches.unshift(state.recentSearches.splice(index, 1)[0]);
+    const targetRecentSearch = state.recentSearches.splice(index, 1)[0];
+    state.recentSearches.unshift(targetRecentSearch);
     renderSearchList();
     localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
-    displayZeroPropertiesFoundError(spinner);
+    if (!state.properties.length) displayZeroPropertiesFoundError(spinner);
     renderProperties();
     matchesCount.style.display = 'block';
   } catch (err) {
@@ -135,9 +136,8 @@ export function onFavesButton(e) {
   }
   matchesCount.style.display = 'none';
   loadMoreButton.style.display = 'none';
-  state.favoriteProperties.length === 0
-    ? (emptyFavListMsg.style.display = 'block')
-    : (emptyFavListMsg.style.display = 'none');
+
+  emptyFavListMsg.style.display = state.favoriteProperties.length === 0 ? 'block' : 'none';
 }
 
 function onLoadMoreButtonClick() {
@@ -153,9 +153,9 @@ function onPropertyDetailsBackButton() {
   renderPage('propertiesList');
 }
 
-export function onPropertyClick(e, isFav) {
+export function onPropertyClick(e, isFavorite) {
   const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
-  state.currentProperty = isFav ? state.favoriteProperties[index] : state.properties[index];
+  state.currentProperty = isFavorite ? state.favoriteProperties[index] : state.properties[index];
   renderPropertyDetails();
   renderPage('propertyDetails');
 }

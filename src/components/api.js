@@ -14,20 +14,18 @@ export async function getSuggestions(location = 'a') {
 
   try {
     const urlParams = encodeURI(`?input=${location}`);
-    const index = setTimeout(() => renderError('server timeout'), 10000);
-    const res = await fetch(LOCATIONS_AUTOCOMPLETE_URL + urlParams, {
+    const timeout = new Promise((resolve, reject) => setTimeout(() => reject('server timeout'), 10000));
+    const res = fetch(LOCATIONS_AUTOCOMPLETE_URL + urlParams, {
       headers: {
         'x-rapidapi-host': X_RAPID_HOST,
         'x-rapidapi-key': API_KEY,
       },
-    });
-
-    const data = await res.json();
-    clearTimeout(index);
-    state.suggestions = data.autocomplete;
+    })
+      .then(res => res.json())
+      .then(data => (state.suggestions = data.autocomplete));
+    Promise.race([timeout, res]);
   } catch (e) {
-    console.log(e);
-    renderError();
+    renderError(e);
   }
 }
 
