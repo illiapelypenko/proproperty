@@ -1,3 +1,10 @@
+import {
+  propertySpinnerContainer,
+  propertySpinnerCanvas,
+  searchSpinnerContainer,
+  searchSpinnerCanvas,
+} from './elements';
+
 class Spinner {
   drawId = 0;
   startAngle = 0;
@@ -40,6 +47,7 @@ class Spinner {
   };
 
   toogleVisibility(show) {
+    console.log(show);
     if (show) {
       this.draw();
       this.spinner.style.display = 'flex';
@@ -52,4 +60,5 @@ class Spinner {
   }
 }
 
-export default Spinner;
+export const propertySpinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
+export const searchSpinner = new Spinner(searchSpinnerContainer, searchSpinnerCanvas);

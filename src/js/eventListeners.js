@@ -7,8 +7,6 @@ import {
   loadMoreButton,
   propertyList,
   propertyListBackButton,
-  propertySpinnerContainer,
-  propertySpinnerCanvas,
   propertyDetailsBackButton,
   addPropertyToFavsButton,
   favesButton,
@@ -17,7 +15,7 @@ import {
   errMsgContainer,
   emptyFavListMsg,
 } from './elements';
-import { state } from '../index';
+import { state } from './index';
 import {
   renderSuggestions,
   renderSearchList,
@@ -28,7 +26,7 @@ import {
   renderError,
 } from './view';
 import { getSuggestions, getProperties } from './api';
-import Spinner from './spinner';
+import { propertySpinner } from './spinner';
 import { getSearchItemInfo, clearChildren, getNodeElementIndexFromNodeList } from './utils';
 
 function onSearchFocus() {
@@ -85,51 +83,48 @@ async function onGoButtonClick() {
   }
   state.currentSearchListItem = state.currentSearchItem;
   state.propertyOffset = 0;
-  const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
-  spinner.toogleVisibility(true);
+  propertySpinner.toogleVisibility(true);
   clearChildren(propertyList);
-  renderPage('propertiesList');
+  renderPage('propertyContainer');
   await getProperties();
   state.recentSearches[0].propsCount = state.properties.length;
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
   renderSearchList();
-  if (!state.properties.length) displayZeroPropertiesFoundError(spinner);
+  if (!state.properties.length) displayZeroPropertiesFoundError(propertySpinner);
   renderProperties();
-  spinner.toogleVisibility(false);
+  propertySpinner.toogleVisibility(false);
   matchesCount.style.display = 'block';
   state.currentSearchItem = {};
 }
 
 async function onRecentSearchClick(e) {
-  const spinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
-
   try {
     if (e.target.nodeName !== 'SPAN') return;
 
     state.propertyOffset = 0;
     const index = getNodeElementIndexFromNodeList(e.target, recentSearchList);
     state.currentSearchListItem = state.recentSearches[index];
-    spinner.toogleVisibility(true);
+    propertySpinner.toogleVisibility(true);
     clearChildren(propertyList);
-    renderPage('propertiesList');
+    renderPage('propertyContainer');
     await getProperties();
     const targetRecentSearch = state.recentSearches.splice(index, 1)[0];
     state.recentSearches.unshift(targetRecentSearch);
     renderSearchList();
     localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
-    if (!state.properties.length) displayZeroPropertiesFoundError(spinner);
+    if (!state.properties.length) displayZeroPropertiesFoundError(propertySpinner);
     renderProperties();
     matchesCount.style.display = 'block';
   } catch (err) {
     console.log(err);
   } finally {
-    spinner.toogleVisibility(false);
+    propertySpinner.toogleVisibility(false);
   }
 }
 
 export function onFavesButton(e) {
   clearChildren(propertyList);
-  renderPage('propertiesList');
+  renderPage('propertyContainer');
 
   for (let property of state.favoriteProperties) {
     createPropertyItem(property, true);
@@ -146,18 +141,18 @@ function onLoadMoreButtonClick() {
 }
 
 function onPropertyListBackButtonClick() {
-  renderPage('search');
+  renderPage('searchContainer');
 }
 
 function onPropertyDetailsBackButton() {
-  renderPage('propertiesList');
+  renderPage('propertyContainer');
 }
 
 export function onPropertyClick(e, isFavorite) {
   const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
   state.currentProperty = isFavorite ? state.favoriteProperties[index] : state.properties[index];
   renderPropertyDetails();
-  renderPage('propertyDetails');
+  renderPage('propertyPageContainer');
 }
 
 export function onAddPropertyToFavsButton(e) {
@@ -167,7 +162,7 @@ export function onAddPropertyToFavsButton(e) {
 }
 
 export function onPropertyFaveslistBackButton(e) {
-  renderPage('search');
+  renderPage('searchContainer');
 }
 
 export function onErrMsgCloseBtnClick(e) {

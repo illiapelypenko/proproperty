@@ -1,4 +1,4 @@
-import { state } from '../index';
+import { state } from './index';
 import {
   suggestionList,
   recentSearchList,
@@ -112,34 +112,36 @@ export function createPropertyItem(property, isFavorite) {
   propertyList.appendChild(li);
 }
 
-export function renderPage(page = 'search') {
-  switch (page) {
-    case 'search':
-      searchContainer.style.display = 'flex';
-      propertyContainer.style.display = 'none';
-      propertyPageContainer.style.display = 'none';
-      break;
-    case 'propertiesList':
-      searchContainer.style.display = 'none';
-      propertyContainer.style.display = 'flex';
-      propertyPageContainer.style.display = 'none';
-      break;
-    case 'propertyDetails':
-      searchContainer.style.display = 'none';
-      propertyContainer.style.display = 'none';
-      propertyPageContainer.style.display = 'flex';
-      break;
-    case 'faves':
-      searchContainer.style.display = 'none';
-      propertyContainer.style.display = 'none';
-      propertyPageContainer.style.display = 'none';
-      break;
-    default:
-      searchContainer.style.display = 'flex';
-      propertyContainer.style.display = 'none';
-      propertyPageContainer.style.display = 'none';
-      break;
+// export function renderPage(page = 'search') {
+//   switch (page) {
+//     case 'propertiesList':
+//       searchContainer.style.display = 'none';
+//       propertyContainer.style.display = 'flex';
+//       propertyPageContainer.style.display = 'none';
+//       break;
+//     case 'propertyDetails':
+//       searchContainer.style.display = 'none';
+//       propertyContainer.style.display = 'none';
+//       propertyPageContainer.style.display = 'flex';
+//       break;
+//     default:
+//       searchContainer.style.display = 'flex';
+//       propertyContainer.style.display = 'none';
+//       propertyPageContainer.style.display = 'none';
+//       break;
+//   }
+// }
+
+export function renderPage(value = 'searchContainer') {
+  const displayPage = {
+    searchContainer,
+    propertyContainer,
+    propertyPageContainer,
+  };
+  for (const page of Object.values(displayPage)) {
+    page.style.display = 'none';
   }
+  displayPage[value].style.display = 'flex';
 }
 
 export function renderPropertyDetails() {

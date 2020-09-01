@@ -1,46 +1,33 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebpackPlugin({
-  template: "./src/index.html",
-  filename: "./index.html",
+  template: './src/index.html',
+  filename: './index.html',
 });
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/index.js"],
+  entry: ['babel-polyfill', './src/js/'],
   output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   plugins: [htmlPlugin],
   module: {
     rules: [
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ["babel-loader"],
+        use: ['babel-loader'],
       },
-      // {
-      //   test: /\.(png|svg|jpg|gif)$/,
-      //   use: ["file-loader"],
-      // },
-      // {
-      //   test: /\.html$/i,
-      //   loader: "html-loader",
-      // },
-      // {
-      //   test: /\.svg$/,
-      //   loader: "svg-inline-loader",
-      // },
     ],
   },
   resolve: {
-    extensions: [".js"],
+    extensions: ['.js'],
   },
 };

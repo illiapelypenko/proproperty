@@ -1,10 +1,10 @@
-import { state } from '../index';
+import { state } from './index';
 import { renderError } from './view';
 
 const BASE_URL = 'https://realtor.p.rapidapi.com';
 const LOCATIONS_AUTOCOMPLETE_URL = BASE_URL + '/locations/auto-complete';
 const PROPERTIES_FOR_SALE_URL = BASE_URL + '/properties/v2/list-for-sale';
-const API_KEY = '897733c2d3msh13b53444c4f53c4p152d7fjsn04123a994089';
+const API_KEY = '9c3d2bf03amsh5a99981aa695eb0p172bfbjsn92315f175e89';
 const X_RAPID_HOST = 'realtor.p.rapidapi.com';
 
 const propertiesBuffer = new Map();
@@ -23,7 +23,7 @@ export async function getSuggestions(location = 'a') {
     })
       .then(res => res.json())
       .then(data => (state.suggestions = data.autocomplete));
-    Promise.race([timeout, res]);
+    await Promise.race([timeout, res]);
   } catch (e) {
     renderError(e);
   }

@@ -1,9 +1,8 @@
-import './styles/main.scss';
-import Spinner from './components/spinner';
-import { renderSearchList, renderError } from './components/view';
-import { getSuggestions } from './components/api';
-import { initEventListeners } from './components/eventListeners';
-import { searchSpinnerContainer, searchSpinnerCanvas } from './components/elements';
+import '../styles/main.scss';
+import { searchSpinner } from './spinner';
+import { renderSearchList } from './view';
+import { getSuggestions } from './api';
+import { initEventListeners } from './eventListeners';
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -30,10 +29,8 @@ function getPersistedData() {
 }
 
 async function init() {
-  const spinner = new Spinner(searchSpinnerContainer, searchSpinnerCanvas);
-
   try {
-    spinner.toogleVisibility(true);
+    searchSpinner.toogleVisibility(true);
     getPersistedData();
     renderSearchList();
     initEventListeners();
@@ -41,7 +38,7 @@ async function init() {
   } catch (err) {
     console.log(err);
   } finally {
-    spinner.toogleVisibility(false);
+    searchSpinner.toogleVisibility(false);
   }
 }
 
