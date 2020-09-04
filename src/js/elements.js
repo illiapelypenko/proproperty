@@ -33,8 +33,12 @@ export const errMsgText = document.querySelector(ERROR_MSG_TEXT);
 export const errMsgCloseBtn = document.querySelector(ERROR_MSG_CLOSE_BTN);
 export const errMsgContainer = document.querySelector(ERROR_MSG_CONTAINER);
 export const favesButton = document.querySelector(FAVES_BTN);
-export const addPropertyToFavsButton = document.querySelector(ADD_PROPERTY_TO_FAVS_BUTTON);
-export const propertyDetailsBackButton = document.querySelector(PROPERTY_DETAILS_BACK_BUTTON);
+export const addPropertyToFavsButton = document.querySelector(
+  ADD_PROPERTY_TO_FAVS_BUTTON
+);
+export const propertyDetailsBackButton = document.querySelector(
+  PROPERTY_DETAILS_BACK_BUTTON
+);
 export const propertyPrice = document.querySelector(PROPERTY_PRICE);
 export const propertyAddress = document.querySelector(PROPERTY_ADDRESS);
 export const propertyThumbnail = document.querySelector(PROPERTY_THUMBNAIL);
@@ -48,12 +52,24 @@ export const recentSearchList = document.querySelector(RECENT_SEARCH_LIST);
 export const propertyList = document.querySelector(PROPERTY_LIST);
 export const matchesCount = document.querySelector(MATCHES_COUNT);
 export const loadMoreButton = document.querySelector(LOAD_MORE_BUTTON);
-export const propertyListBackButton = document.querySelector(PROPERTY_LIST_BACK_BUTTON);
+export const propertyListBackButton = document.querySelector(
+  PROPERTY_LIST_BACK_BUTTON
+);
 export const searchContainer = document.querySelector(SEARCH_CONTAINER);
 export const propertyContainer = document.querySelector(PROPERTY_CONTAINER);
-export const searchSpinnerContainer = document.querySelector(SEARCH_SPINNER_CONTAINER);
-export const searchSpinnerCanvas = document.querySelector(SEARCH_SPINNER_CANVAS);
-export const propertySpinnerContainer = document.querySelector(PROPERTY_SPINNER_CONTAINER);
-export const propertySpinnerCanvas = document.querySelector(PROPERTY_SPINNER_CANVAS);
+export const searchSpinnerContainer = document.querySelector(
+  SEARCH_SPINNER_CONTAINER
+);
+export const searchSpinnerCanvas = document.querySelector(
+  SEARCH_SPINNER_CANVAS
+);
+export const propertySpinnerContainer = document.querySelector(
+  PROPERTY_SPINNER_CONTAINER
+);
+export const propertySpinnerCanvas = document.querySelector(
+  PROPERTY_SPINNER_CANVAS
+);
 export const propertyItem = document.querySelector(PROPERTY_ITEM);
-export const propertyPageContainer = document.querySelector(PROPERTY_PAGE_CONTAINER);
+export const propertyPageContainer = document.querySelector(
+  PROPERTY_PAGE_CONTAINER
+);

@@ -1,5 +1,10 @@
 export function getSearchItemInfo(state) {
-  const { area_type, city, state_code } = state.currentSearchItem;
+  const {
+    area_type,
+    city,
+    state_code
+  } = state.currentSearchItem;
+
   return `${area_type}, ${city}, ${state_code}`;
 }
 
@@ -10,7 +15,9 @@ export function clearChildren(parent) {
 }
 
 export function getNodeElementIndexFromNodeList(nodeElement, nodeList) {
-  return Array.from(nodeList.children).findIndex(item => item.innerText === nodeElement.innerText);
+  return Array.from(nodeList.children).findIndex(
+    item => item.innerText === nodeElement.innerText
+  );
 }
 
 export function displayZeroPropertiesFoundError(spinner) {

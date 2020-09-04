@@ -1,31 +1,31 @@
 .property-list-container {
-  width: 100%;
-  background-color: $main-color;
-  flex: 1 1;
+  position: relative;
   display: flex;
+  display: none;
+  flex: 1 1;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   padding: 40px $defaultSidePadding;
-  display: none;
-  position: relative;
+  background-color: $main-color;
 
   .empty-fav-list-msg {
     display: none;
+    margin-top: 50px;
     color: #fff;
     font-size: 1.5rem;
-    margin-top: 50px;
   }
 
   .property-list-container__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     width: 500px;
 
     .property-list-container__matches {
       color: #fff;
-      font-size: 1.5rem;
       font-weight: bold;
+      font-size: 1.5rem;
     }
   }
 
@@ -37,9 +37,9 @@
       display: flex;
       align-items: stretch;
       width: 100%;
-      background-color: $mainLight-color;
-      padding: 20px;
       margin-bottom: 20px;
+      padding: 20px;
+      background-color: $mainLight-color;
       cursor: pointer;
 
       &:last-child {
@@ -56,15 +56,16 @@
       }
 
       .property-item__info {
-        color: #fff;
-        font-size: 1.2rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         margin-left: 20px;
+        color: #fff;
+        font-size: 1.2rem;
       }
     }
   }
+
   .loadMore-btn {
     display: none;
   }

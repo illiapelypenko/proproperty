@@ -1,8 +1,16 @@
 import '../styles/main.scss';
-import { searchSpinner } from './spinner';
-import { renderSearchList } from './view';
-import { getSuggestions } from './api';
-import { initEventListeners } from './eventListeners';
+import {
+  searchSpinner
+} from './spinner';
+import {
+  renderSearchList
+} from './view';
+import {
+  getSuggestions
+} from './api';
+import {
+  initEventListeners
+} from './eventListeners';
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -18,11 +26,13 @@ export const state = {
 
 function getPersistedData() {
   const recentSearchesInStorage = localStorage.getItem('recentSearches');
+
   if (recentSearchesInStorage) {
     state.recentSearches = JSON.parse(recentSearchesInStorage);
   }
 
   const favoriteProperties = localStorage.getItem('favoriteProperties');
+
   if (favoriteProperties) {
     state.favoriteProperties = JSON.parse(favoriteProperties);
   }

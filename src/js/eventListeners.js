@@ -15,7 +15,9 @@ import {
   errMsgContainer,
   emptyFavListMsg,
 } from './elements';
-import { state } from './index';
+import {
+  state
+} from './index';
 import {
   renderSuggestions,
   renderSearchList,
@@ -23,11 +25,19 @@ import {
   renderPropertyDetails,
   renderPage,
   createPropertyItem,
-  renderError,
 } from './view';
-import { getSuggestions, getProperties } from './api';
-import { propertySpinner } from './spinner';
-import { getSearchItemInfo, clearChildren, getNodeElementIndexFromNodeList } from './utils';
+import {
+  getSuggestions,
+  getProperties
+} from './api';
+import {
+  propertySpinner
+} from './spinner';
+import {
+  getSearchItemInfo,
+  clearChildren,
+  getNodeElementIndexFromNodeList,
+} from './utils';
 
 function onSearchFocus() {
   state.showSuggestions = true;
@@ -67,7 +77,8 @@ function onSuggestionClick(e) {
 
 function onMyLocationButtonClick() {
   // get random location from suggestion list
-  state.currentSearchItem = state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
+  state.currentSearchItem =
+    state.suggestions[Math.floor(Math.random() * state.suggestions.length)];
   searchTextInput.value = getSearchItemInfo(state);
 }
 
@@ -76,21 +87,30 @@ async function onGoButtonClick() {
     searchTextInput.focus();
     return;
   }
+
   searchTextInput.value = '';
   state.recentSearches.unshift(state.currentSearchItem);
+
   while (state.recentSearches.length > 5) {
     state.recentSearches.pop();
   }
+
   state.currentSearchListItem = state.currentSearchItem;
   state.propertyOffset = 0;
+
   propertySpinner.toogleVisibility(true);
   clearChildren(propertyList);
   renderPage('propertyContainer');
+
   await getProperties();
+
   state.recentSearches[0].propsCount = state.properties.length;
   localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
   renderSearchList();
-  if (!state.properties.length) displayZeroPropertiesFoundError(propertySpinner);
+
+  if (!state.properties.length)
+    displayZeroPropertiesFoundError(propertySpinner);
+
   renderProperties();
   propertySpinner.toogleVisibility(false);
   matchesCount.style.display = 'block';
@@ -102,17 +122,28 @@ async function onRecentSearchClick(e) {
     if (e.target.nodeName !== 'SPAN') return;
 
     state.propertyOffset = 0;
+
     const index = getNodeElementIndexFromNodeList(e.target, recentSearchList);
     state.currentSearchListItem = state.recentSearches[index];
+
     propertySpinner.toogleVisibility(true);
     clearChildren(propertyList);
     renderPage('propertyContainer');
+
     await getProperties();
+
     const targetRecentSearch = state.recentSearches.splice(index, 1)[0];
     state.recentSearches.unshift(targetRecentSearch);
     renderSearchList();
-    localStorage.setItem('recentSearches', JSON.stringify(state.recentSearches));
-    if (!state.properties.length) displayZeroPropertiesFoundError(propertySpinner);
+
+    localStorage.setItem(
+      'recentSearches',
+      JSON.stringify(state.recentSearches)
+    );
+
+    if (!state.properties.length)
+      displayZeroPropertiesFoundError(propertySpinner);
+
     renderProperties();
     matchesCount.style.display = 'block';
   } catch (err) {
@@ -129,10 +160,11 @@ export function onFavesButton(e) {
   for (let property of state.favoriteProperties) {
     createPropertyItem(property, true);
   }
+
   matchesCount.style.display = 'none';
   loadMoreButton.style.display = 'none';
-
-  emptyFavListMsg.style.display = state.favoriteProperties.length === 0 ? 'block' : 'none';
+  emptyFavListMsg.style.display =
+    state.favoriteProperties.length === 0 ? 'block' : 'none';
 }
 
 function onLoadMoreButtonClick() {
@@ -150,7 +182,11 @@ function onPropertyDetailsBackButton() {
 
 export function onPropertyClick(e, isFavorite) {
   const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
-  state.currentProperty = isFavorite ? state.favoriteProperties[index] : state.properties[index];
+
+  state.currentProperty = isFavorite ?
+    state.favoriteProperties[index] :
+    state.properties[index];
+
   renderPropertyDetails();
   renderPage('propertyPageContainer');
 }
@@ -158,7 +194,11 @@ export function onPropertyClick(e, isFavorite) {
 export function onAddPropertyToFavsButton(e) {
   addPropertyToFavsButton.style.visibility = 'hidden';
   state.favoriteProperties.push(state.currentProperty);
-  localStorage.setItem('favoriteProperties', JSON.stringify(state.favoriteProperties));
+
+  localStorage.setItem(
+    'favoriteProperties',
+    JSON.stringify(state.favoriteProperties)
+  );
 }
 
 export function onPropertyFaveslistBackButton(e) {
@@ -178,8 +218,14 @@ export function initEventListeners() {
   goButton.addEventListener('click', onGoButtonClick);
   recentSearchList.addEventListener('click', onRecentSearchClick);
   loadMoreButton.addEventListener('click', onLoadMoreButtonClick);
-  propertyListBackButton.addEventListener('click', onPropertyListBackButtonClick);
-  propertyDetailsBackButton.addEventListener('click', onPropertyDetailsBackButton);
+  propertyListBackButton.addEventListener(
+    'click',
+    onPropertyListBackButtonClick
+  );
+  propertyDetailsBackButton.addEventListener(
+    'click',
+    onPropertyDetailsBackButton
+  );
   addPropertyToFavsButton.addEventListener('click', onAddPropertyToFavsButton);
   favesButton.addEventListener('click', onFavesButton);
   errMsgCloseBtn.addEventListener('click', onErrMsgCloseBtnClick);

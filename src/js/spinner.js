@@ -24,7 +24,13 @@ class Spinner {
     // inner circle
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.beginPath();
-    this.ctx.arc(this.spinnerX, this.spinnerY, this.spinnerX - lineWidth, 0, 2 * Math.PI);
+    this.ctx.arc(
+      this.spinnerX,
+      this.spinnerY,
+      this.spinnerX - lineWidth,
+      0,
+      2 * Math.PI
+    );
     this.ctx.lineWidth = lineWidth;
     this.ctx.strokeStyle = '#32363e';
     this.ctx.stroke();
@@ -47,7 +53,6 @@ class Spinner {
   };
 
   toogleVisibility(show) {
-    console.log(show);
     if (show) {
       this.draw();
       this.spinner.style.display = 'flex';
@@ -60,5 +65,11 @@ class Spinner {
   }
 }
 
-export const propertySpinner = new Spinner(propertySpinnerContainer, propertySpinnerCanvas);
-export const searchSpinner = new Spinner(searchSpinnerContainer, searchSpinnerCanvas);
+export const propertySpinner = new Spinner(
+  propertySpinnerContainer,
+  propertySpinnerCanvas
+);
+export const searchSpinner = new Spinner(
+  searchSpinnerContainer,
+  searchSpinnerCanvas
+);
