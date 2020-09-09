@@ -14,35 +14,35 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+}
 
-  .error-msg {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 100px;
-    background: $lightSlateBlue;
-    opacity: 1;
+.error-msg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+  background: $lightSlateBlue;
+  opacity: 1;
+}
 
-    .error-msg__text {
-      color: $dark;
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
+.error-msg__text {
+  color: $dark;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
 
-    .error-msg__close-icon {
-      position: absolute;
-      bottom: 20px;
-      // left: 0px;
-      align-self: center;
-      width: 30px;
-      height: 30px;
+.error-msg__close-icon {
+  position: absolute;
+  bottom: 20px;
+  // left: 0px;
+  align-self: center;
+  width: 30px;
+  height: 30px;
 
-      path:hover {
-        color: #fff;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-    }
+  path:hover {
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
   }
 }

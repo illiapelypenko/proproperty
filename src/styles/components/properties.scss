@@ -8,65 +8,65 @@
   width: 100%;
   padding: 40px $defaultSidePadding;
   background-color: $blueCharcoal;
+}
 
-  .empty-fav-list-msg {
-    display: none;
-    margin-top: 50px;
-    color: #fff;
-    font-size: 1.5rem;
+.empty-fav-list-msg {
+  display: none;
+  margin-top: 50px;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.property-list-container__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.property-list-container__matches {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.property-list {
+  width: 500px;
+  margin: 40px 0px;
+}
+
+.property-item {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: $ebonyClay;
+  cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 0px;
   }
 
-  .property-list-container__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 500px;
-
-    .property-list-container__matches {
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
+  &:hover {
+    background-color: $lightSlateBlue;
   }
+}
 
-  .property-list {
-    width: 500px;
-    margin: 40px 0px;
+.property-item__thumbnail {
+  width: 100px;
+  height: 100px;
+}
 
-    .property-item {
-      display: flex;
-      align-items: stretch;
-      width: 100%;
-      margin-bottom: 20px;
-      padding: 20px;
-      background-color: $ebonyClay;
-      cursor: pointer;
+.property-item__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20px;
+  color: #fff;
+  font-size: 1.2rem;
+}
 
-      &:last-child {
-        margin-bottom: 0px;
-      }
-
-      &:hover {
-        background-color: $lightSlateBlue;
-      }
-
-      .property-item__thumbnail {
-        width: 100px;
-        height: 100px;
-      }
-
-      .property-item__info {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-left: 20px;
-        color: #fff;
-        font-size: 1.2rem;
-      }
-    }
-  }
-
-  .loadMore-btn {
-    display: none;
-  }
+.loadMore-btn {
+  display: none;
 }
