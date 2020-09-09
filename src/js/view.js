@@ -1,6 +1,4 @@
-import {
-  state
-} from './index';
+import { state } from './index';
 import {
   suggestionList,
   recentSearchList,
@@ -20,12 +18,8 @@ import {
   errMsgText,
   emptyFavListMsg,
 } from './elements';
-import {
-  clearChildren
-} from './utils';
-import {
-  onPropertyClick
-} from './eventListeners';
+import { clearChildren } from './utils';
+import { onPropertyClick } from './eventListeners';
 
 export function renderSuggestions() {
   const suggestionToShow = 4;
@@ -33,17 +27,10 @@ export function renderSuggestions() {
 
   clearChildren(suggestionList);
 
-  const {
-    suggestions,
-    showSuggestions
-  } = state;
+  const { suggestions, showSuggestions } = state;
 
   for (let suggestion of suggestions) {
-    const {
-      area_type,
-      city,
-      state_code
-    } = suggestion;
+    const { area_type, city, state_code } = suggestion;
     const li = document.createElement('li');
 
     li.classList.add('search__suggestion');
@@ -61,15 +48,10 @@ export function renderSuggestions() {
 export function renderSearchList() {
   clearChildren(recentSearchList);
 
-  const {
-    recentSearches
-  } = state;
+  const { recentSearches } = state;
 
   for (const search of recentSearches) {
-    const {
-      city,
-      area_type
-    } = search;
+    const { city, area_type } = search;
 
     const li = document.createElement('li');
     li.classList.add('recent-searches__item');
@@ -106,13 +88,12 @@ export function renderProperties() {
 
 export function createPropertyItem(property, isFavorite) {
   const {
-    address: {
-      city,
-      line
-    },
+    address: { city, line },
     price,
     thumbnail,
   } = property;
+
+  if (!thumbnail) return;
 
   const li = document.createElement('li');
   li.classList.add('property-item');
@@ -155,26 +136,35 @@ export function renderPage(page = 'searchContainer') {
 }
 
 export function renderPropertyDetails() {
+  const {
+    property_id,
+    baths,
+    beds,
+    thumbnail,
+    address,
+    price,
+  } = state.currentProperty;
+
   addPropertyToFavsButton.style.visibility = state.favoriteProperties.find(
-      prop => state.currentProperty.property_id === prop.property_id
-    ) ?
-    'hidden' :
-    'visible';
+    prop => property_id === prop.property_id
+  )
+    ? 'hidden'
+    : 'visible';
 
   emptyFavListMsg.style.display = 'none';
 
-  const bath = state.currentProperty.baths <= 1 ? 'bath' : 'baths';
-  const bed = state.currentProperty.beds <= 1 ? 'bed' : 'beds';
+  const bath = baths <= 1 ? 'bath' : 'baths';
+  const bed = beds <= 1 ? 'bed' : 'beds';
 
   propertySummary.innerHTML =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum blanditiis ducimus necessitatibus iste suntofficia hic sapiente iure eius porro.';
-  propertyFurniture.innerHTML = `${state.currentProperty.beds} ${bed}, ${state.currentProperty.baths} ${bath}`;
-  propertyThumbnail.src = state.currentProperty.thumbnail;
-  propertyAddress.innerHTML = `${state.currentProperty.address.line}, ${state.currentProperty.address.city}`;
-  propertyPrice.innerHTML = state.currentProperty.price;
+  propertyFurniture.innerHTML = `${beds} ${bed}, ${baths} ${bath}`;
+  propertyThumbnail.src = thumbnail;
+  propertyAddress.innerHTML = `${address.line}, ${address.city}`;
+  propertyPrice.innerHTML = price;
 }
 
 export function renderError(err) {
   errMsgContainer.style.display = 'flex';
-  errMsgText.innerHTML = err ? err : 'Network connection issues';
+  errMsgText.innerHTML = err || 'Network connection issues';
 }

@@ -1,9 +1,5 @@
 export function getSearchItemInfo(state) {
-  const {
-    area_type,
-    city,
-    state_code
-  } = state.currentSearchItem;
+  const { area_type, city, state_code } = state.currentSearchItem;
 
   return `${area_type}, ${city}, ${state_code}`;
 }

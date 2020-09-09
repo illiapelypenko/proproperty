@@ -3,12 +3,12 @@
   flex: 1 1;
   flex-direction: column;
   width: 100%;
-  background: $mainLight-color;
+  background: $ebonyClay;
 
   .property-header-container {
     flex: 0 1;
     padding: 10px 20px;
-    background: $main-color;
+    background: $blueCharcoal;
 
     .property-header {
       display: flex;
@@ -18,7 +18,7 @@
       margin: auto;
 
       h2 {
-        color: $secondary-color;
+        color: $lightSlateBlue;
       }
 
       button {
@@ -41,13 +41,13 @@
     width: 500px;
     margin: auto;
     padding: 40px 0px;
-    background: $mainLight-color;
+    background: $ebonyClay;
     color: #fff;
   }
 
   .property-price {
     margin-bottom: 20px;
-    color: $secondary-color;
+    color: $lightSlateBlue;
     font-size: 1.5rem;
   }
 

@@ -15,9 +15,7 @@ import {
   errMsgContainer,
   emptyFavListMsg,
 } from './elements';
-import {
-  state
-} from './index';
+import { state } from './index';
 import {
   renderSuggestions,
   renderSearchList,
@@ -26,13 +24,8 @@ import {
   renderPage,
   createPropertyItem,
 } from './view';
-import {
-  getSuggestions,
-  getProperties
-} from './api';
-import {
-  propertySpinner
-} from './spinner';
+import { getSuggestions, getProperties } from './api';
+import { propertySpinner } from './spinner';
 import {
   getSearchItemInfo,
   clearChildren,
@@ -183,9 +176,9 @@ function onPropertyDetailsBackButton() {
 export function onPropertyClick(e, isFavorite) {
   const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
 
-  state.currentProperty = isFavorite ?
-    state.favoriteProperties[index] :
-    state.properties[index];
+  state.currentProperty = isFavorite
+    ? state.favoriteProperties[index]
+    : state.properties[index];
 
   renderPropertyDetails();
   renderPage('propertyPageContainer');

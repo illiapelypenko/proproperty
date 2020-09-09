@@ -1,16 +1,8 @@
 import '../styles/main.scss';
-import {
-  searchSpinner
-} from './spinner';
-import {
-  renderSearchList
-} from './view';
-import {
-  getSuggestions
-} from './api';
-import {
-  initEventListeners
-} from './eventListeners';
+import { searchSpinner } from './spinner';
+import { renderSearchList } from './view';
+import { getSuggestions } from './api';
+import { initEventListeners } from './eventListeners';
 
 export const state = {
   currentSearchItem: {}, // sugestion

@@ -5,12 +5,12 @@
   align-items: center;
   justify-content: flex-end;
   padding: 20px $defaultSidePadding;
-  background-color: $mainDark-color;
+  background-color: $dark;
 
   &__logo {
     position: absolute;
     left: 50%;
-    color: $secondary-color;
+    color: $lightSlateBlue;
     transform: translateX(-50%); // for centring logo besides btn on the right
   }
 }

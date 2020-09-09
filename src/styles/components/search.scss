@@ -8,7 +8,7 @@
     position: relative;
     flex: 0 1;
     padding: 40px $defaultSidePadding;
-    background-color: $main-color;
+    background-color: $blueCharcoal;
     color: #fff;
 
     .search__instruction {
@@ -39,12 +39,12 @@
             padding: 1rem 2rem;
             border-top: 1px solid gray;
             background-color: #fff;
-            color: $font-color;
+            color: $charcoal;
             font-weight: bold;
             font-size: 1.2rem;
 
             &:hover {
-              background-color: $secondary-color;
+              background-color: $lightSlateBlue;
               cursor: pointer;
             }
           }
@@ -62,7 +62,7 @@
   .search-results {
     flex: 1 1;
     padding: 40px 0px;
-    background-color: $mainLight-color;
+    background-color: $ebonyClay;
     color: #fff;
 
     .recent-searches {
@@ -74,7 +74,7 @@
       &__text {
         flex: 0 0;
         padding-bottom: 20px;
-        color: $secondary-color;
+        color: $lightSlateBlue;
         font-weight: bold;
         font-size: 1.5rem;
         text-align: center;
@@ -84,7 +84,7 @@
         flex: 1 1;
         overflow-y: auto;
         padding: 20px;
-        border: 4px $secondary-color solid;
+        border: 4px $lightSlateBlue solid;
         font-size: 1.2rem;
 
         li {
@@ -102,7 +102,7 @@
             cursor: pointer;
 
             &:hover {
-              color: $secondary-color;
+              color: $lightSlateBlue;
               text-decoration: underline;
             }
           }

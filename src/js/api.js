@@ -1,22 +1,15 @@
-import {
-  state
-} from './index';
-import {
-  renderError
-} from './view';
+import { state } from './index';
+import { renderError } from './view';
 
 const BASE_URL = 'https://realtor.p.rapidapi.com';
 const LOCATIONS_AUTOCOMPLETE_URL = BASE_URL + '/locations/auto-complete';
 const PROPERTIES_FOR_SALE_URL = BASE_URL + '/properties/v2/list-for-sale';
-const API_KEY = '111f4ef646msh0edca9349d6475cp1b2e0cjsn85aad4b1d986';
+const API_KEY = '602f460c5fmsh71d7ba1f189d2f0p162159jsnda4f7df0403f';
 const X_RAPID_HOST = 'realtor.p.rapidapi.com';
 
 const propertiesBuffer = new Map();
 
-export async function http(
-  url,
-  urlParams = ''
-) {
+export async function http(url, urlParams = '') {
   const headers = {
     'x-rapidapi-host': X_RAPID_HOST,
     'x-rapidapi-key': API_KEY,
@@ -38,6 +31,11 @@ export async function http(
       });
 
     const response = await Promise.race([query(), timeout()]);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
     const data = await response.json();
 
     return data;
@@ -46,8 +44,7 @@ export async function http(
   }
 }
 
-
-export async function getSuggestions(location = 'a') {
+export async function getSuggestions(location) {
   if (!location) location = 'a';
 
   const urlParams = encodeURI(`?input=${location}`);
@@ -57,14 +54,11 @@ export async function getSuggestions(location = 'a') {
 }
 
 export async function getProperties() {
-  const {
-    city,
-    state_code
-  } = state.currentSearchListItem;
+  const { city, state_code } = state.currentSearchListItem;
 
   const mapKey = JSON.stringify({
     city,
-    state_code
+    state_code,
   });
 
   if (propertiesBuffer.has(mapKey)) {

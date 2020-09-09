@@ -7,7 +7,7 @@
   align-items: center;
   width: 100%;
   padding: 40px $defaultSidePadding;
-  background-color: $main-color;
+  background-color: $blueCharcoal;
 
   .empty-fav-list-msg {
     display: none;
@@ -39,7 +39,7 @@
       width: 100%;
       margin-bottom: 20px;
       padding: 20px;
-      background-color: $mainLight-color;
+      background-color: $ebonyClay;
       cursor: pointer;
 
       &:last-child {
@@ -47,7 +47,7 @@
       }
 
       &:hover {
-        background-color: $secondary-color;
+        background-color: $lightSlateBlue;
       }
 
       .property-item__thumbnail {

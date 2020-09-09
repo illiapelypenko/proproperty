@@ -21,11 +21,11 @@
     align-items: center;
     justify-content: center;
     padding: 100px;
-    background: $secondary-color;
+    background: $lightSlateBlue;
     opacity: 1;
 
     .error-msg__text {
-      color: $mainDark-color;
+      color: $dark;
       font-weight: bold;
       font-size: 1.5rem;
     }
