@@ -1,56 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>ProProperty</title>
-  </head>
-  <body>
-    <header class="header">
-      <h1 class="header__logo">ProProperty</h1>
-      <button>Faves</button>
-    </header>
-    <main class="main">
-      <section class="search-container">
-        <div class="search">
-          <p class="search__instruction">
-            Use the form below to search for houses to buy. You can search by place-name, postcode,
-            or click 'My location', to search in your current location!
-          </p>
-          <form class="search__form">
-            <p class="search__tip">Search and choose a suggested location from the list below</p>
-            <div class="search__input-container">
-              <input class="search__input" type="text" placeholder="USA city" />
-              <ul class="search__suggestions"></ul>
-            </div>
-            <div class="search__buttons">
-              <input type="button" class="search__go-btn" value="Go" />
-              <input type="button" class="search__myLocation-btn" value="My locations" />
-            </div>
-          </form>
-          <div class="search-spinner spinner">
-            <canvas class="search-spinner__canvas spinner-canvas" width="400" height="400"></canvas>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>ProProperty</title>
+</head>
+
+<body>
+  <header class="header">
+    <h1 class="header__logo">ProProperty</h1>
+    <button class="faves-btn">Faves</button>
+  </header>
+  <section class="error-msg-container">
+    <div class="error-msg">
+      <p class="error-msg__text">Error !</p>
+      <svg aria-hidden="true" focusable="false" data-prefix="fas"
+        data-icon="times" class="error-msg__close-icon" role="img"
+        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+        <path fill="currentColor"
+          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
+        </path>
+      </svg>
+    </div>
+  </section>
+  <main class="main">
+    <section class="search-container">
+      <div class="search">
+        <p class="search__instruction">
+          Use the form below to search for houses to buy. You can search by
+          place-name, postcode, or click 'My
+          location', to search in your current location!
+        </p>
+        <form class="search__form">
+          <p class="search__tip">Search and choose a suggested location from the
+            list below</p>
+          <div class="search__input-container">
+            <input class="search__input" type="text" placeholder="USA city" />
+            <ul class="search__suggestions"></ul>
           </div>
-        </div>
-        <div class="search-results">
-          <div class="recent-searches">
-            <p class="recent-searches__text">Recent searches:</p>
-            <ul class="recent-searches__items"></ul>
+          <div class="search__buttons">
+            <input type="button" class="search__go-btn" value="Go" />
+            <input type="button" class="search__myLocation-btn"
+              value="My locations" />
           </div>
+        </form>
+        <div class="search-spinner spinner">
+          <canvas class="search-spinner__canvas spinner-canvas" width="400"
+            height="400"></canvas>
         </div>
-      </section>
-      <section class="property-container">
-        <div class="property-spinner spinner">
-          <canvas class="property-spinner__canvas spinner-canvas" width="400" height="400"></canvas>
+      </div>
+      <div class="search-results">
+        <div class="recent-searches">
+          <p class="recent-searches__text">Recent searches:</p>
+          <ul class="recent-searches__items"></ul>
         </div>
-        <div class="property-container__header">
-          <input type="button" class="back-btn" value="Back" />
-          <p class="property-container__matches">matches</p>
+      </div>
+    </section>
+    <section class="property-list-container">
+      <div class="property-list-spinner spinner">
+        <canvas class="property-list-spinner__canvas spinner-canvas" width="400"
+          height="400"></canvas>
+      </div>
+      <div class="property-list-container__header">
+        <button class="property-list-back-btn">Back</button>
+        <p class="property-list-container__matches">matches</p>
+      </div>
+      <p class="empty-fav-list-msg">You have not added any properties to your
+        favourites</p>
+      <ul class="property-list"></ul>
+      <input type="button" class="loadMore-btn" value="Load more" />
+    </section>
+    <section class="property-page-container">
+      <div class="property-header-container">
+        <div class="property-header">
+          <button class="property-details-back-btn">Back</button>
+          <h2>Property Details</h2>
+          <button class="addPropertyToFavs-btn">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas"
+              data-icon="plus" class="plus-icon" role="img"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              <path fill="black"
+                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
+              </path>
+            </svg>
+          </button>
         </div>
-        <ul class="property-list"></ul>
-        <input type="button" class="loadMore-btn" value="Load more" />
-      </section>
-    </main>
-  </body>
+      </div>
+      <div class="property-details">
+        <span class="property-price">$200000</span>
+        <span class="property-address">25 Merrimac Way Unit B,
+          Tyngsborough</span>
+        <img
+          src="https://ap.rdcpix.com/b73f39861d1b4cd2c11757ac91bced81l-m3681480232x.jpg"
+          alt="thumbnail" class="property-thumbnail" />
+        <span class="property-furniture"></span>
+        <p class="property-summary"></p>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>

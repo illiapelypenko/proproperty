@@ -1,9 +1,8 @@
-import './styles/main.scss';
-import Spinner from './components/spinner';
-import { renderSearchList } from './components/view';
-import { getSuggestions } from './components/api';
-import { initEventListeners } from './components/eventListeners';
-import { searchSpinnerContainer, searchSpinnerCanvas } from './components/elements';
+import '../styles/main.scss';
+import { searchSpinner } from './spinner';
+import { renderSearchList } from './view';
+import { getSuggestions } from './api';
+import { initEventListeners } from './eventListeners';
 
 export const state = {
   currentSearchItem: {}, // sugestion
@@ -13,29 +12,35 @@ export const state = {
   currentSearchListItem: {}, // recentSearch
   properties: [], // property[]
   propertyOffset: 0,
+  currentProperty: {},
+  favoriteProperties: [],
 };
 
-function setPersistedRecentSearches() {
+function getPersistedData() {
   const recentSearchesInStorage = localStorage.getItem('recentSearches');
 
   if (recentSearchesInStorage) {
     state.recentSearches = JSON.parse(recentSearchesInStorage);
   }
+
+  const favoriteProperties = localStorage.getItem('favoriteProperties');
+
+  if (favoriteProperties) {
+    state.favoriteProperties = JSON.parse(favoriteProperties);
+  }
 }
 
 async function init() {
-  const spinner = new Spinner(searchSpinnerContainer, searchSpinnerCanvas);
-
   try {
-    spinner.toogleVisibility(true);
-    setPersistedRecentSearches();
+    searchSpinner.toogleVisibility(true);
+    getPersistedData();
     renderSearchList();
     initEventListeners();
     await getSuggestions();
   } catch (err) {
     console.log(err);
   } finally {
-    spinner.toogleVisibility(false);
+    searchSpinner.toogleVisibility(false);
   }
 }
 
