@@ -32,6 +32,8 @@ import {
   getNodeElementIndexFromNodeList,
 } from './utils';
 
+// search
+
 function onSearchFocus() {
   state.showSuggestions = true;
   renderSuggestions();
@@ -110,6 +112,8 @@ async function onGoButtonClick() {
   state.currentSearchItem = {};
 }
 
+// recent searches list
+
 async function onRecentSearchClick(e) {
   try {
     if (e.target.nodeName !== 'SPAN') return;
@@ -146,6 +150,46 @@ async function onRecentSearchClick(e) {
   }
 }
 
+// search-list
+
+function onPropertyListBackButtonClick() {
+  renderPage('searchContainer');
+}
+
+export function onPropertyClick(e, isFavorite) {
+  const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
+
+  state.currentProperty = isFavorite
+    ? state.favoriteProperties[index]
+    : state.properties[index];
+
+  renderPropertyDetails();
+  renderPage('propertyPageContainer');
+}
+
+function onLoadMoreButtonClick() {
+  state.propertyOffset = state.propertyOffset + 20;
+  renderProperties();
+}
+
+// property-page
+
+function onPropertyDetailsBackButton() {
+  renderPage('propertyContainer');
+}
+
+export function onAddPropertyToFavsButton(e) {
+  addPropertyToFavsButton.style.visibility = 'hidden';
+  state.favoriteProperties.push(state.currentProperty);
+
+  localStorage.setItem(
+    'favoriteProperties',
+    JSON.stringify(state.favoriteProperties)
+  );
+}
+
+// faves list
+
 export function onFavesButton(e) {
   clearChildren(propertyList);
   renderPage('propertyContainer');
@@ -160,47 +204,17 @@ export function onFavesButton(e) {
     state.favoriteProperties.length === 0 ? 'block' : 'none';
 }
 
-function onLoadMoreButtonClick() {
-  state.propertyOffset = state.propertyOffset + 20;
-  renderProperties();
-}
-
-function onPropertyListBackButtonClick() {
-  renderPage('searchContainer');
-}
-
-function onPropertyDetailsBackButton() {
-  renderPage('propertyContainer');
-}
-
-export function onPropertyClick(e, isFavorite) {
-  const index = getNodeElementIndexFromNodeList(e.currentTarget, propertyList);
-
-  state.currentProperty = isFavorite
-    ? state.favoriteProperties[index]
-    : state.properties[index];
-
-  renderPropertyDetails();
-  renderPage('propertyPageContainer');
-}
-
-export function onAddPropertyToFavsButton(e) {
-  addPropertyToFavsButton.style.visibility = 'hidden';
-  state.favoriteProperties.push(state.currentProperty);
-
-  localStorage.setItem(
-    'favoriteProperties',
-    JSON.stringify(state.favoriteProperties)
-  );
-}
-
 export function onPropertyFaveslistBackButton(e) {
   renderPage('searchContainer');
 }
 
+// err msg
+
 export function onErrMsgCloseBtnClick(e) {
   errMsgContainer.style.display = 'none';
 }
+
+// init
 
 export function initEventListeners() {
   searchTextInput.addEventListener('focus', onSearchFocus, true);
