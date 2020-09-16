@@ -1,3 +1,10 @@
+import {
+  propertySpinnerContainer,
+  propertySpinnerCanvas,
+  searchSpinnerContainer,
+  searchSpinnerCanvas,
+} from './elements';
+
 class Spinner {
   drawId = 0;
   startAngle = 0;
@@ -17,7 +24,13 @@ class Spinner {
     // inner circle
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.beginPath();
-    this.ctx.arc(this.spinnerX, this.spinnerY, this.spinnerX - lineWidth, 0, 2 * Math.PI);
+    this.ctx.arc(
+      this.spinnerX,
+      this.spinnerY,
+      this.spinnerX - lineWidth,
+      0,
+      2 * Math.PI
+    );
     this.ctx.lineWidth = lineWidth;
     this.ctx.strokeStyle = '#32363e';
     this.ctx.stroke();
@@ -52,4 +65,11 @@ class Spinner {
   }
 }
 
-export default Spinner;
+export const propertySpinner = new Spinner(
+  propertySpinnerContainer,
+  propertySpinnerCanvas
+);
+export const searchSpinner = new Spinner(
+  searchSpinnerContainer,
+  searchSpinnerCanvas
+);

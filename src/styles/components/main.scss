@@ -1,183 +1,48 @@
 .main {
-  flex: 1 1;
   display: flex;
+  flex: 1 1;
+}
 
-  .search-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+.error-msg-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 3;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
 
-    .search {
-      position: relative;
-      background-color: $main-color;
-      padding: 40px $defaultSidePadding;
-      color: #fff;
-      flex: 0 1;
+.error-msg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+  background: $lightSlateBlue;
+  opacity: 1;
+}
 
-      .search__instruction {
-        font-size: 1.2rem;
-        text-align: center;
-      }
+.error-msg__text {
+  color: $dark;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
 
-      .search__form {
-        padding-top: 40px;
-        width: 500px;
-        margin: auto;
+.error-msg__close-icon {
+  position: absolute;
+  bottom: 20px;
+  // left: 0px;
+  align-self: center;
+  width: 30px;
+  height: 30px;
 
-        .search__tip {
-          margin-bottom: 5px;
-        }
-
-        .search__input-container {
-          position: relative;
-
-          .search__suggestions {
-            height: 0;
-            transition: height 0.5s;
-            overflow-y: auto;
-
-            .search__suggestion {
-              padding: 1rem 2rem;
-              font-weight: bold;
-              font-size: 1.2rem;
-              color: $font-color;
-              width: 100%;
-              display: block;
-              background-color: #fff;
-              border-top: 1px solid gray;
-
-              &:hover {
-                background-color: $secondary-color;
-                cursor: pointer;
-              }
-            }
-          }
-        }
-
-        .search__buttons {
-          margin-top: 20px;
-          display: flex;
-          justify-content: space-between;
-        }
-      }
-    }
-
-    .search-results {
-      flex: 1 1;
-      padding: 40px 0px;
-      background-color: $mainLight-color;
-      color: #fff;
-
-      .recent-searches {
-        width: 500px;
-        margin: 0px auto;
-        display: flex;
-        flex-direction: column;
-
-        &__text {
-          text-align: center;
-          font-size: 1.5rem;
-          font-weight: bold;
-          padding-bottom: 20px;
-          color: $secondary-color;
-          flex: 0 0;
-        }
-
-        &__items {
-          flex: 1 1;
-          border: 4px $secondary-color solid;
-          padding: 20px;
-          font-size: 1.2rem;
-          overflow-y: auto;
-
-          li {
-            padding: 5px 0px;
-
-            &:first-child {
-              padding-top: 0px;
-            }
-
-            &:last-child {
-              padding-bottom: 0px;
-            }
-
-            span {
-              cursor: pointer;
-
-              &:hover {
-                color: $secondary-color;
-                text-decoration: underline;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .property-container {
-    width: 100%;
-    background-color: $main-color;
-    flex: 1 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px $defaultSidePadding;
-    display: none;
-    position: relative;
-
-    .property-container__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 500px;
-
-      .property-container__matches {
-        color: #fff;
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
-    }
-
-    .property-list {
-      width: 500px;
-      margin: 40px 0px;
-
-      .property-item {
-        display: flex;
-        align-items: stretch;
-        width: 100%;
-        background-color: $mainLight-color;
-        padding: 20px;
-        margin-bottom: 20px;
-        cursor: pointer;
-
-        &:last-child {
-          margin-bottom: 0px;
-        }
-
-        &:hover {
-          background-color: $secondary-color;
-        }
-
-        .property-item__thumbnail {
-          width: 100px;
-          height: 100px;
-        }
-
-        .property-item__info {
-          color: #fff;
-          font-size: 1.2rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          margin-left: 20px;
-        }
-      }
-    }
-    .loadMore-btn {
-      display: none;
-    }
+  path:hover {
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
   }
 }
